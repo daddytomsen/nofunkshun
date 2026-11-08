@@ -11,6 +11,9 @@ Eine einseitige Landingpage für die Band „nofunkshun“: wer die Band ist, wi
 - Keine fremden Logos oder Markennamen erfinden. Plattform-Links (Spotify, Bandcamp …) als schlichte Textlinks bzw. eigene neutrale Icons.
 - Fotos und Logo nur aus den Quellen, die Thomas nennt. Originale bleiben, wo sie sind; Kopien für die Seite liegen verkleinert in `assets/`.
 
+## Design-System
+Verbindliche Quelle für Farben, Schrift, Abstände, Bauteile und Bildsprache: **Nofunkshun Design System** https://claude.ai/artifact/R4JMHWAvCYierNeu9i2Ws5 (Artifact, privat). Vor jeder Gestaltungsänderung dort `project/README.md` lesen; neue Werte zuerst dort eintragen, dann in der Seite verwenden.
+
 ## Technik
 - Statische Seite: `index.html`, `styles.css`, optional ein kleines `script.js`. Keine Build-Kette, keine Frameworks, keine externen Tracker.
 - Mobil zuerst, dann Desktop. Hell/dunkel nach Stil der Band, nicht nach Systemvorgabe, wenn Thomas nichts anderes sagt.

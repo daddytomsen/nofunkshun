@@ -2,6 +2,10 @@
 
 **08.11.2026 · ONLINE: https://daddytomsen.github.io/nofunkshun/** (Repo daddytomsen/nofunkshun, öffentlich, Pages aus `main` /root, HTTPS an). Spotify-Player live geprüft. Nächster Schritt: Domain nofunkshun.de bei INWX (Thomas bucht), dann CNAME + DNS.
 
+**08.11.2026 nachmittags · Design-System angelegt:** https://claude.ai/artifact/R4JMHWAvCYierNeu9i2Ws5 (Tokens aus styles.css, Grunge-Schrift, 12 Bauteile, Logos/Artwork/Fotos). Die Website nutzt es noch nicht direkt: Variablennamen weichen ab (`--display` statt `--font-display` usw.), und der Hover des gefüllten Buttons zeigt `ink` auf `accent` (3,55:1) statt `bg` auf `accent`.
+
+**08.11.2026 abends · Fotos und Start überarbeitet (lokal, noch nicht hochgeladen):** Galerie durch 12 Wassenrock-2024-Fotos ersetzt (Gruppe + jedes Mitglied einzeln, als Schwarz-Weiß gespeichert, Nennung „Fotos: Armin Zedler“ unter der Galerie). Start-Foto zeigt jetzt alle fünf (Handy: neuer Zuschnitt aus DSC00787; Desktop: Foto wird nicht mehr seitlich beschnitten, Logo sitzt tiefer und kleiner). Claim „Musik soll man nicht nur hören …“ auf Thomas' Wunsch entfernt. **Design-System nachziehen:** Hero ohne Claim, Galerie-Fotos ohne Farbe beim Drüberfahren, Logo im Hero 330 px unten statt 460 px mittig.
+
 ## Was drin ist
 - `index.html` – eine Seite: Start (Logo, Claim, Spotify, nächster Gig) · Live · Musik (Black Moon EP, Spotify-Player per Zwei-Klick, Teaser-Video) · Band (Bio + Besetzung) · Fotos · Kontakt
 - DE/EN-Umschalter (merkt sich die Wahl; Erstwahl nach Browsersprache)
@@ -14,7 +18,8 @@
 |---|---|
 | Bio, Besetzung | `Bio Nofunkshun.docx` (sprachlich gestrafft, EN übersetzt, nichts ergänzt) |
 | Logo, Black-Moon-Logo, Cover | `Art-Work/` (Logo für dunklen Grund weiß umgefärbt) |
-| Fotos | `Bandfotos/` DSC00787 (Start mobil), DSC00782 (Start Desktop), 00810, 00880, 00905, 00939, 00917, 00893, 00815, 00907 |
+| Start-Foto | `Bandfotos/` DSC00787 (mobil, Zuschnitt mit allen fünf), DSC00782 (Desktop) |
+| Galerie | `/Volumes/Transcend/Nofunkshun/Nofunkshun/Wassernrock 07.09.24 3000 NoFunkshun/` Nr. 0022, 0004, 0090, 0016, 0012, 0053, 0074, 0028, 0047, 0042, 0081, 0025 – Fotograf Armin Zedler (Wasserzeichen bleibt drin) |
 | Teaser | `Videos/Nofunkshun Black Moon Teaser 2021 Kopie.mp4` → 720p, 8,7 MB |
 | Schrift Überschriften | `Art-Work/grunge.ttf` |
 | Tracklist EP | Dateinamen in `Album_Black Moon/` |
@@ -30,7 +35,8 @@ Bewusst **nicht** verwendet: Fotos mit „Bruises“-Banner (fremde Band), Wasse
 3. **YouTube:** Kanal existiert offenbar (Screenshot im Artwork), Link fehlt.
 4. **Vergangene Gigs** in `gigs.js` nachtragen; Datum MUBU 2019.
 5. Wer ist auf welchem Foto? (Dann wären Einzelfotos bei der Besetzung möglich.)
-6. Fotograf/in der Bandfotos nennen?
+6. Fotograf/in der Proberaum-Bandfotos (Start-Foto) nennen? Für die Wassenrock-Fotos steht Armin Zedler drin – passt die Nutzung mit ihm so?
+7. ~~„KONTAKT“ brach um (T in zweiter Zeile)~~ – behoben 08.11.2026: Abschnittstitel bleiben einzeilig und verkleinern sich nach Wortbreite (`--title-em`, Standard 8,9 em, Kontakt 11 em). Ins Design-System übernehmen.
 
 ## Vorschau lokal
 Vorschau-Server „nofunkshun“ (Port 8798) liest aus einem Scratchpad-Spiegel, weil der Server `~/Downloads` nicht lesen darf. Nach Änderungen: `rsync -a --delete --exclude .claude ~/Downloads/nofunkshun-website/ <spiegel>/`.

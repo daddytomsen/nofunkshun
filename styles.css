@@ -86,21 +86,37 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .hero__bg, .hero__bg img {
   position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2;
 }
-.hero__bg img { object-fit: cover; object-position: 50% 30%; filter: grayscale(1) contrast(1.15) brightness(.72); }
+.hero__bg img { filter: grayscale(1) contrast(1.1) brightness(.8); }
+/* Bandfoto immer ganz zeigen: alle fünf im Bild, kein Rand abgeschnitten.
+   Hochkant/schmal: Foto oben unter der Kopfleiste, Logo darunter. */
+.hero__bg img { object-fit: contain; object-position: 50% 56px; }
+/* Logo-Block unten, damit kein Gesicht verdeckt wird */
+.hero { place-items: end center; }
+/* Hochkant: Foto als Band oben, unterer Rand läuft weich in den Grund aus */
+@media (max-aspect-ratio: 1/1) {
+  .hero__bg img {
+    top: 56px; bottom: auto; height: auto; object-fit: fill;
+    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent);
+            mask-image: linear-gradient(to bottom, #000 75%, transparent);
+  }
+}
+/* Breiter als das Foto (16:9): füllen, oben ausrichten, Köpfe bleiben drin */
+@media (min-aspect-ratio: 16/9) {
+  .hero__bg img { object-fit: cover; object-position: 50% 15%; }
+}
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(11,11,11,.15), rgba(11,11,11,.75) 70%),
+    radial-gradient(ellipse at 50% 40%, rgba(11,11,11,.1), rgba(11,11,11,.4) 80%),
     linear-gradient(to bottom, rgba(11,11,11,0) 55%, var(--bg));
 }
 .hero__inner { width: 100%; max-width: 720px; }
-.hero__logo { margin: 0 auto; width: min(78vw, 460px); }
+.hero__logo { margin: 0 auto; width: min(66vw, 330px); }
 .hero__logo img { width: 100%; filter: drop-shadow(0 4px 30px rgba(0,0,0,.6)); }
 .hero__genre {
-  margin: 22px 0 10px;
+  margin: 22px 0 28px;
   font: 600 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
 }
-.hero__claim { margin: 0 auto 28px; max-width: 30ch; font-size: clamp(18px, 4.6vw, 24px); line-height: 1.35; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .hero__down {
   position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
@@ -130,9 +146,11 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 }
 .sec__title {
   margin: 0 0 32px;
-  font: 400 clamp(38px, 11vw, 96px)/1 var(--display);
+  /* Grunge läuft in Großbuchstaben sehr breit. Titel bleiben einzeilig und
+     werden so klein, dass das breiteste Wort (--title-em, Breite in em) passt. */
+  font: 400 min(clamp(38px, 11vw, 96px), calc((min(100vw, var(--max)) - 2 * var(--pad)) / var(--title-em, 8.9)))/1 var(--display);
   letter-spacing: 0; text-transform: uppercase;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
   transform: rotate(-1.5deg); transform-origin: left;
 }
 .sec__title::after {
@@ -209,10 +227,11 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .gallery .g--wide { grid-column: span 2; aspect-ratio: 2 / 1.2; }
 .gallery img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: grayscale(1) contrast(1.1);
-  transition: filter .4s, transform .6s;
+  transition: transform .6s;
 }
-.gallery a:hover img, .gallery a:focus-visible img { filter: none; transform: scale(1.03); }
+/* Fotos sind schon schwarz-weiß gespeichert; beim Drüberfahren nur Zoom */
+.gallery a:hover img, .gallery a:focus-visible img { transform: scale(1.03); }
+.gallery__credit { margin: 14px 0 0; font: 12px/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim); }
 
 /* ── Kontakt ────────────────────────────────── */
 .sec--contact { padding-bottom: 96px; }

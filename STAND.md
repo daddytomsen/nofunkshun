@@ -1,6 +1,6 @@
 # Stand – nofunkshun-website
 
-**08.11.2026 · Erster Entwurf läuft lokal, von Thomas abgenommen. Noch nicht online (Impressum-Anschrift fehlt, Push nur auf Wunsch).**
+**08.11.2026 · ONLINE: https://daddytomsen.github.io/nofunkshun/** (Repo daddytomsen/nofunkshun, öffentlich, Pages aus `main` /root, HTTPS an). Spotify-Player live geprüft. Nächster Schritt: Domain nofunkshun.de bei INWX (Thomas bucht), dann CNAME + DNS.
 
 ## Was drin ist
 - `index.html` – eine Seite: Start (Logo, Claim, Spotify, nächster Gig) · Live · Musik (Black Moon EP, Spotify-Player per Zwei-Klick, Teaser-Video) · Band (Bio + Besetzung) · Fotos · Kontakt

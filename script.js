@@ -9,8 +9,15 @@
     try { localStorage.setItem('nfs-lang', l); } catch (e) {}
     renderGigs();
   }
+  var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('[data-set-lang]').forEach(function (b) {
-    b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
+    b.addEventListener('click', function () {
+      var l = b.getAttribute('data-set-lang');
+      if (l === root.dataset.lang) return;
+      // Sprachwechsel als weiche Überblendung, wo der Browser es kann
+      if (document.startViewTransition && !calm) document.startViewTransition(function () { setLang(l); });
+      else setLang(l);
+    });
   });
 
   /* ── Kopfleiste nach dem Hero füllen ─────── */
@@ -130,8 +137,9 @@
   }
   renderGigs();
 
-  /* ── Inhalte beim Scrollen sanft einblenden ── */
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  /* ── Rückfall fürs Einblenden: nur wo CSS-Scroll-Animationen fehlen (z. B. Firefox) ── */
+  var nativeScroll = window.CSS && CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
+  if (!nativeScroll && 'IntersectionObserver' in window && !calm) {
     var items = document.querySelectorAll('.sec > :not(.gallery), .gallery > a');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {

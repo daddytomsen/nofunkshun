@@ -8,6 +8,13 @@
 
 **08.11.2026 spät · Handy-Start neu (lokal):** Start-Foto ohne Kante (unscharfer Hintergrund aus demselben Foto, Ränder laufen weich aus, langsamer Zoom), Kopfleiste scrollt auf dem Handy weg statt mitzulaufen, „Nächster Gig“ als kompakte Zeile statt Riesen-Button, Inhalte blenden beim Scrollen sanft ein (nicht bei „Bewegung reduzieren“), CSS/JS mit Versionsnummer gegen alten Browser-Cache. Ins Design-System übernehmen.
 
+**08.11.2026 nachts · Scroll-Bewegung (lokal):** Start löst sich beim Scrollen auf (Foto sinkt, Schrift steigt), Titel werden von links freigelegt + roter Balken wächst, Inhalte gleiten herein, EP-Cover kippt gerade, Galerie-Kacheln wachsen herein mit Tiefe im Foto, Genre-Laufband (zwei Zeilen gegeneinander) nach „Live“, Bühnenfoto mit Tiefe (Wassenrock 0047) vor „Band“, rote Fortschrittslinie oben, weiche Überblendung beim Sprachwechsel und zum Impressum. Alles CSS-Scroll-Animationen (Safari 26+, Chrome), Firefox bekommt nur das einfache Einblenden per JS; bei „Bewegung reduzieren“ bleibt alles still. Ins Design-System übernehmen (Abschnitt Bewegung ist damit überholt).
+
+**Stolpersteine Safari (gefunden mit WebKit 26 über Playwright, 08.11.2026):**
+- `body { overflow-x: hidden }` macht body in Safari zum eigenen Scroll-Bereich → alle Scroll-Animationen hingen fest. Nie overflow auf body; Abschneiden nur mit `overflow: clip` (erzeugt keinen Scroll-Bereich).
+- Grunge zeichnet Großbuchstaben bis 2,07 em über der Grundlinie bei Zeilenhöhe 1 → ragt fast eine Zeile über ihren Kasten. Alles, was Grunge beschneidet (overflow, clip-path), braucht oben viel Luft (Titel: clip-path oben −150 %, Laufband: Zeilenhöhe 2,3 + Polster).
+- Prüfen in WebKit: `scratchpad/wk` (Playwright, Browser im Ordner `browsers`, Start außerhalb der Sandbox).
+
 ## Was drin ist
 - `index.html` – eine Seite: Start (Logo, Claim, Spotify, nächster Gig) · Live · Musik (Black Moon EP, Spotify-Player per Zwei-Klick, Teaser-Video) · Band (Bio + Besetzung) · Fotos · Kontakt
 - DE/EN-Umschalter (merkt sich die Wahl; Erstwahl nach Browsersprache)

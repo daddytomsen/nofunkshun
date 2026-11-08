@@ -13,7 +13,7 @@
   <meta property="og:description" content="Post-Rock · Stoner · Metal aus Aachen.">
   <meta property="og:image" content="assets/img/hero-quer.webp">
   <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261108b">
+  <link rel="stylesheet" href="styles.css?v=20261108e">
   <script>
     // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
     (function () {
@@ -27,6 +27,7 @@
   </script>
 </head>
 <body>
+  <div class="progress" aria-hidden="true"></div>
   <a class="skip" href="#live"><span lang="de">Zum Inhalt</span><span lang="en">Skip to content</span></a>
 
   <header class="bar">
@@ -84,6 +85,11 @@
       </details>
     </section>
 
+    <!-- ── Laufband: Genre, fließt beim Scrollen gegeneinander ── -->
+    <div class="flow" aria-hidden="true">
+      <div class="flow__row"><span>Post-Rock<i></i>Stoner<i></i>Metal<i></i>Aachen<i></i>Post-Rock<i></i>Stoner<i></i>Metal<i></i>Aachen<i></i>Post-Rock<i></i>Stoner<i></i>Metal<i></i>Aachen<i></i></span></div>
+    </div>
+
     <!-- ── MUSIK ────────────────────────────────────────── -->
     <section class="sec sec--music" id="musik">
       <h2 class="sec__title"><span lang="de">Musik</span><span lang="en">Music</span></h2>
@@ -120,6 +126,12 @@
         <figcaption>Black Moon – Teaser</figcaption>
       </figure>
     </section>
+
+    <!-- ── Bühnenbild mit Tiefe ── -->
+    <figure class="stage" aria-hidden="true">
+      <img src="assets/img/wassenrock-0047.webp" alt="" loading="lazy">
+      <figcaption>Wassenrock 2024</figcaption>
+    </figure>
 
     <!-- ── BAND ─────────────────────────────────────────── -->
     <section class="sec sec--band" id="band">
@@ -193,7 +205,7 @@
     </p>
   </footer>
 
-  <script src="gigs.js?v=20261108b"></script>
-  <script src="script.js?v=20261108b"></script>
+  <script src="gigs.js?v=20261108e"></script>
+  <script src="script.js?v=20261108e"></script>
 </body>
 </html>

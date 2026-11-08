@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="de" data-lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NOFUNKSHUN – Post-Rock · Stoner · Metal aus Aachen</title>
+  <meta name="description" content="Nofunkshun – fünfköpfige deutsch-niederländische Band aus Aachen zwischen Post-Rock, Stoner Rock, Progressive Rock und Metal. Musik, Termine, Booking.">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NOFUNKSHUN">
+  <meta property="og:description" content="Post-Rock · Stoner · Metal aus Aachen. Musik soll man nicht nur hören, sondern vor allem spüren.">
+  <meta property="og:image" content="assets/img/hero-quer.webp">
+  <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
+    (function () {
+      var l = null;
+      try { l = localStorage.getItem('nfs-lang'); } catch (e) {}
+      if (l !== 'de' && l !== 'en') l = (navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+      document.documentElement.lang = l;
+      document.documentElement.dataset.lang = l;
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#live"><span lang="de">Zum Inhalt</span><span lang="en">Skip to content</span></a>
+
+  <header class="bar">
+    <a class="bar__mark" href="#top" aria-label="Nofunkshun – nach oben">
+      <img src="assets/img/logo.webp" alt="" width="40" height="39">
+    </a>
+    <nav class="bar__nav" aria-label="Seitenbereiche">
+      <a href="#live">Live</a>
+      <a href="#musik"><span lang="de">Musik</span><span lang="en">Music</span></a>
+      <a href="#band">Band</a>
+      <a href="#fotos"><span lang="de">Fotos</span><span lang="en">Photos</span></a>
+      <a href="#kontakt"><span lang="de">Kontakt</span><span lang="en">Contact</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Sprache / Language">
+      <button type="button" data-set-lang="de">DE</button>
+      <button type="button" data-set-lang="en">EN</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <section class="hero">
+      <picture class="hero__bg">
+        <source media="(min-aspect-ratio: 1/1)" srcset="assets/img/hero-quer.webp">
+        <img src="assets/img/hero-hoch.webp" alt="" fetchpriority="high">
+      </picture>
+      <div class="hero__inner">
+        <h1 class="hero__logo">
+          <img src="assets/img/logo.webp" alt="Nofunkshun" width="900" height="872">
+        </h1>
+        <p class="hero__genre">Post-Rock · Stoner · Metal · Aachen</p>
+        <p class="hero__claim">
+          <span lang="de">Musik soll man nicht nur hören, sondern vor allem spüren.</span>
+          <span lang="en">Music isn’t just meant to be heard. It’s meant to be felt.</span>
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href="https://open.spotify.com/artist/3h1Febi28MziUNpcq5khGA" target="_blank" rel="noopener">
+            <span lang="de">Auf Spotify hören</span><span lang="en">Listen on Spotify</span>
+          </a>
+          <a class="btn" href="#live" id="next-gig-btn" hidden></a>
+        </div>
+      </div>
+      <a class="hero__down" href="#live" aria-label="weiter">↓</a>
+    </section>
+
+    <!-- ── LIVE ─────────────────────────────────────────── -->
+    <section class="sec" id="live">
+      <h2 class="sec__title">Live</h2>
+      <ul class="gigs" id="gigs-next"></ul>
+      <p class="gigs__none" id="gigs-none" hidden>
+        <span lang="de">Neue Termine folgen. Lust auf Krach bei euch? Schreibt uns.</span>
+        <span lang="en">New dates coming soon. Want us to play your place? Get in touch.</span>
+      </p>
+
+      <details class="past">
+        <summary><span lang="de">Vergangene Gigs</span><span lang="en">Past shows</span></summary>
+        <ul class="gigs gigs--past" id="gigs-past"></ul>
+      </details>
+    </section>
+
+    <!-- ── MUSIK ────────────────────────────────────────── -->
+    <section class="sec sec--music" id="musik">
+      <h2 class="sec__title"><span lang="de">Musik</span><span lang="en">Music</span></h2>
+
+      <article class="release">
+        <img class="release__cover" src="assets/img/black-moon-cover.webp" alt="Cover der EP Black Moon" width="900" height="808" loading="lazy">
+        <div class="release__text">
+          <p class="kicker">EP · 2019</p>
+          <h3 class="release__title"><img src="assets/img/black-moon-logo.webp" alt="Black Moon" loading="lazy"></h3>
+          <ol class="tracks">
+            <li>Black Moon</li>
+            <li>Nofunkshun</li>
+            <li>Euphoria</li>
+            <li>X</li>
+          </ol>
+          <a class="btn btn--solid" href="https://open.spotify.com/artist/3h1Febi28MziUNpcq5khGA" target="_blank" rel="noopener">Spotify</a>
+        </div>
+      </article>
+
+      <div class="embed" id="spotify-embed">
+        <p>
+          <span lang="de">Der Spotify-Player wird erst nach deinem Klick geladen. Dabei werden Daten an Spotify übertragen.</span>
+          <span lang="en">The Spotify player only loads after you click. Data is then sent to Spotify.</span>
+        </p>
+        <button type="button" class="btn" data-load-spotify>
+          <span lang="de">Player laden</span><span lang="en">Load player</span>
+        </button>
+      </div>
+
+      <figure class="teaser">
+        <video controls preload="none" playsinline poster="assets/video/black-moon-teaser.jpg" width="1280" height="720">
+          <source src="assets/video/black-moon-teaser.mp4" type="video/mp4">
+        </video>
+        <figcaption>Black Moon – Teaser</figcaption>
+      </figure>
+    </section>
+
+    <!-- ── BAND ─────────────────────────────────────────── -->
+    <section class="sec sec--band" id="band">
+      <h2 class="sec__title">Band</h2>
+      <div class="band">
+        <div class="bio">
+          <div lang="de">
+            <p class="lead">Laut soll es sein, wenn Nofunkshun auf der Bühne steht: Die Gitarren kreischen, die Bässe wummern, das Schlagzeug hämmert.</p>
+            <p>Die Aachener Band ist eine fünfköpfige deutsch-niederländische Truppe. Gegründet wurde sie 2013, damals noch in anderer Besetzung und unter anderem Namen, um zusammen kreativ zu sein und die Liebe zur Musik zu teilen. Nach Zuwachs am Gesang und einem Gitarristenwechsel zeigen Nofunkshun diese Liebe jetzt auch der Öffentlichkeit.</p>
+            <p>Festlegen lassen wollen sie sich nicht. Progressive Rock, Post-Rock und Stoner Rock passen oft, und doch lassen sich ihre Songs nur schwer in eine Schublade stecken. Gesungen wird über Verlangen, Freude und Ängste bis hin zu tragischen Verlusten.</p>
+            <p>Auf unzähligen Bühnen in Clubs und Kneipen, regional und überregional, hat sich die Band in über einem Jahrzehnt eine feste Fangemeinde erspielt. 2019 erschien die EP „Black Moon“ mit vier Songs. Zurzeit arbeitet die Band an neuen Songs.</p>
+          </div>
+          <div lang="en">
+            <p class="lead">It has to be loud when Nofunkshun hit the stage: guitars screaming, bass rumbling, drums pounding.</p>
+            <p>The band from Aachen is a five-piece German-Dutch crew. It was founded in 2013, back then with a different line-up and under a different name, to be creative together and share a love of music. After adding a singer and changing guitarists, Nofunkshun now want to share that love with everyone.</p>
+            <p>They refuse to be pinned down. Progressive rock, post-rock and stoner rock often fit, yet their songs are hard to put in a box. They sing about desire, joy and fear, all the way to tragic loss.</p>
+            <p>Countless shows in clubs, bars and on stages, local and further afield, have earned the band a loyal following over more than a decade. In 2019 they released the four-track EP “Black Moon”. The band is currently working on new songs.</p>
+          </div>
+        </div>
+        <ul class="members">
+          <li><b>Dennis Shun</b><span lang="de">Gesang</span><span lang="en">Vocals</span></li>
+          <li><b>Tom Shun</b><span lang="de">Gitarre</span><span lang="en">Guitar</span></li>
+          <li><b>Nils Shun</b><span lang="de">Gitarre</span><span lang="en">Guitar</span></li>
+          <li><b>Tomsen Shun</b><span lang="de">Bass</span><span lang="en">Bass</span></li>
+          <li><b>Marcel Shun</b><span lang="de">Schlagzeug</span><span lang="en">Drums</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── FOTOS ────────────────────────────────────────── -->
+    <section class="sec" id="fotos">
+      <h2 class="sec__title"><span lang="de">Fotos</span><span lang="en">Photos</span></h2>
+      <div class="gallery">
+        <a href="assets/img/foto-00810.webp" class="g--wide g--big"><img src="assets/img/foto-00810.webp" alt="Nofunkshun vor einer Graffitiwand" loading="lazy"></a>
+        <a href="assets/img/foto-00880.webp"><img src="assets/img/foto-00880.webp" alt="Gesang im Proberaum" loading="lazy"></a>
+        <a href="assets/img/foto-00905.webp"><img src="assets/img/foto-00905.webp" alt="Bassdrum mit Nofunkshun-Logo" loading="lazy"></a>
+        <a href="assets/img/foto-00939.webp"><img src="assets/img/foto-00939.webp" alt="Schlagzeug" loading="lazy"></a>
+        <a href="assets/img/foto-00917.webp"><img src="assets/img/foto-00917.webp" alt="Bandmitglied am Mikrofon" loading="lazy"></a>
+        <a href="assets/img/foto-00893.webp"><img src="assets/img/foto-00893.webp" alt="Gitarrist im Gegenlicht" loading="lazy"></a>
+        <a href="assets/img/foto-00815.webp"><img src="assets/img/foto-00815.webp" alt="Bandfoto vor Graffiti" loading="lazy"></a>
+        <a href="assets/img/foto-00907.webp" class="g--wide"><img src="assets/img/foto-00907.webp" alt="Gitarrist vor Marshall-Verstärker" loading="lazy"></a>
+      </div>
+    </section>
+
+    <!-- ── KONTAKT ──────────────────────────────────────── -->
+    <section class="sec sec--contact" id="kontakt">
+      <h2 class="sec__title"><span lang="de">Kontakt</span><span lang="en">Contact</span></h2>
+      <p class="kicker"><span lang="de">Booking &amp; Anfragen</span><span lang="en">Booking &amp; inquiries</span></p>
+      <a class="mail" href="mailto:nofunkshun@gmail.com?subject=Booking%20Nofunkshun">nofunkshun@gmail.com</a>
+      <ul class="social">
+        <li><a href="https://www.instagram.com/nofunkshun/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.facebook.com/nofunkshun/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://open.spotify.com/artist/3h1Febi28MziUNpcq5khGA" target="_blank" rel="noopener">Spotify</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>© <span id="year">2026</span> Nofunkshun</p>
+    <p>
+      <a href="impressum.html">Impressum</a> ·
+      <a href="impressum.html#datenschutz"><span lang="de">Datenschutz</span><span lang="en">Privacy</span></a>
+    </p>
+  </footer>
+
+  <script src="gigs.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

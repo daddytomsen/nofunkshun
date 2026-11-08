@@ -120,13 +120,30 @@
     // Knopf im Hero: nächster Termin
     var btn = document.getElementById('next-gig-btn');
     if (next.length) {
-      btn.textContent = T[l].next + ': ' + whenText(next[0], l) + ' · ' + next[0].ort;
+      btn.textContent = '';
+      btn.appendChild(el('span', 'hero__next-label', T[l].next));
+      btn.appendChild(el('span', 'hero__next-what', whenText(next[0], l) + ' · ' + next[0].ort));
       btn.hidden = false;
     } else {
       btn.hidden = true;
     }
   }
   renderGigs();
+
+  /* ── Inhalte beim Scrollen sanft einblenden ── */
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var items = document.querySelectorAll('.sec > :not(.gallery), .gallery > a');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    items.forEach(function (n, i) {
+      n.classList.add('reveal');
+      if (n.parentNode.classList.contains('gallery')) n.style.transitionDelay = (i % 4) * 70 + 'ms';
+      io.observe(n);
+    });
+  }
 
   /* ── Spotify erst nach Klick laden ──────── */
   var sp = document.querySelector('[data-load-spotify]');

@@ -13,7 +13,7 @@
   <meta property="og:description" content="Post-Rock · Stoner · Metal aus Aachen.">
   <meta property="og:image" content="assets/img/hero-quer.webp">
   <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261108b">
   <script>
     // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
     (function () {
@@ -22,6 +22,7 @@
       if (l !== 'de' && l !== 'en') l = (navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
       document.documentElement.lang = l;
       document.documentElement.dataset.lang = l;
+      document.documentElement.classList.add('js');
     })();
   </script>
 </head>
@@ -48,6 +49,7 @@
   <main id="top">
     <!-- ── HERO ─────────────────────────────────────────── -->
     <section class="hero">
+      <div class="hero__ambient" aria-hidden="true"></div>
       <picture class="hero__bg">
         <source media="(min-aspect-ratio: 1/1)" srcset="assets/img/hero-quer.webp">
         <img src="assets/img/hero-hoch.webp" alt="" fetchpriority="high">
@@ -61,7 +63,7 @@
           <a class="btn btn--solid" href="https://open.spotify.com/artist/3h1Febi28MziUNpcq5khGA" target="_blank" rel="noopener">
             <span lang="de">Auf Spotify hören</span><span lang="en">Listen on Spotify</span>
           </a>
-          <a class="btn" href="#live" id="next-gig-btn" hidden></a>
+          <a class="hero__next" href="#live" id="next-gig-btn" hidden></a>
         </div>
       </div>
       <a class="hero__down" href="#live" aria-label="weiter">↓</a>
@@ -191,7 +193,7 @@
     </p>
   </footer>
 
-  <script src="gigs.js"></script>
-  <script src="script.js"></script>
+  <script src="gigs.js?v=20261108b"></script>
+  <script src="script.js?v=20261108b"></script>
 </body>
 </html>

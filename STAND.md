@@ -6,6 +6,8 @@
 
 **08.11.2026 abends · Fotos und Start überarbeitet (lokal, noch nicht hochgeladen):** Galerie durch 12 Wassenrock-2024-Fotos ersetzt (Gruppe + jedes Mitglied einzeln, als Schwarz-Weiß gespeichert, Nennung „Fotos: Armin Zedler“ unter der Galerie). Start-Foto zeigt jetzt alle fünf (Handy: neuer Zuschnitt aus DSC00787; Desktop: Foto wird nicht mehr seitlich beschnitten, Logo sitzt tiefer und kleiner). Claim „Musik soll man nicht nur hören …“ auf Thomas' Wunsch entfernt. **Design-System nachziehen:** Hero ohne Claim, Galerie-Fotos ohne Farbe beim Drüberfahren, Logo im Hero 330 px unten statt 460 px mittig.
 
+**08.11.2026 spät · Handy-Start neu (lokal):** Start-Foto ohne Kante (unscharfer Hintergrund aus demselben Foto, Ränder laufen weich aus, langsamer Zoom), Kopfleiste scrollt auf dem Handy weg statt mitzulaufen, „Nächster Gig“ als kompakte Zeile statt Riesen-Button, Inhalte blenden beim Scrollen sanft ein (nicht bei „Bewegung reduzieren“), CSS/JS mit Versionsnummer gegen alten Browser-Cache. Ins Design-System übernehmen.
+
 ## Was drin ist
 - `index.html` – eine Seite: Start (Logo, Claim, Spotify, nächster Gig) · Live · Musik (Black Moon EP, Spotify-Player per Zwei-Klick, Teaser-Video) · Band (Bio + Besetzung) · Fotos · Kontakt
 - DE/EN-Umschalter (merkt sich die Wahl; Erstwahl nach Browsersprache)

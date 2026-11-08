@@ -73,57 +73,85 @@ html[data-lang="en"] body [lang="de"] { display: none !important; }
 }
 html[data-lang="de"] .lang [data-set-lang="de"],
 html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color: var(--bg); }
+/* Handy: Kopfleiste scrollt mit der Seite weg und liegt ohne dunklen Balken über dem Foto */
+@media (max-width: 759px) {
+  .bar, .bar.is-solid { position: absolute; background: none; box-shadow: none; }
+  .bar__mark { display: none; }
+  .lang { background: rgba(11,11,11,.35); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-color: rgba(236,231,221,.45); }
+}
 
 /* ── Hero ───────────────────────────────────── */
+/* Aufbau von hinten nach vorn:
+   1. hero__ambient  – dasselbe Foto, stark unscharf und dunkel, füllt die ganze Fläche
+   2. hero__bg img   – das scharfe Foto, ganz zu sehen (alle fünf), Ränder laufen weich aus
+   3. ::before       – leichte Vignette und Übergang in den Seitengrund
+   So hat das Foto keine Kante und wirkt nicht aufgeklebt. */
 .hero {
   position: relative;
   min-height: 100svh;
-  display: grid; place-items: center;
-  padding: 88px var(--pad) 72px;
+  display: grid; place-items: end center;
+  padding: 88px var(--pad) 64px;
   text-align: center;
   isolation: isolate;
+  overflow: hidden;
 }
-.hero__bg, .hero__bg img {
-  position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2;
+.hero__ambient {
+  position: absolute; inset: -12%; z-index: -3;
+  background: url("assets/img/hero-hoch.webp") 50% 35% / cover no-repeat;
+  filter: grayscale(1) blur(40px) brightness(.42);
 }
-.hero__bg img { filter: grayscale(1) contrast(1.1) brightness(.8); }
-/* Bandfoto immer ganz zeigen: alle fünf im Bild, kein Rand abgeschnitten.
-   Hochkant/schmal: Foto oben unter der Kopfleiste, Logo darunter. */
-.hero__bg img { object-fit: contain; object-position: 50% 56px; }
-/* Logo-Block unten, damit kein Gesicht verdeckt wird */
-.hero { place-items: end center; }
-/* Hochkant: Foto als Band oben, unterer Rand läuft weich in den Grund aus */
-@media (max-aspect-ratio: 1/1) {
+@media (min-aspect-ratio: 1/1) {
+  .hero__ambient { background-image: url("assets/img/hero-quer.webp"); }
+}
+.hero__bg { position: absolute; inset: 0; z-index: -2; }
+.hero__bg img {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 15%;
+  filter: grayscale(1) contrast(1.1) brightness(.85);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 58%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 58%, transparent 100%);
+  transform-origin: 50% 35%;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+/* Fenster schmaler als das Foto: Foto in voller Breite oben, Höhe folgt dem Bild,
+   die Maske bezieht sich dann auf das Foto selbst */
+@media (max-aspect-ratio: 16/9) {
   .hero__bg img {
-    top: 56px; bottom: auto; height: auto; object-fit: fill;
-    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent);
-            mask-image: linear-gradient(to bottom, #000 75%, transparent);
+    height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 62%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 62%, transparent 100%);
   }
 }
-/* Breiter als das Foto (16:9): füllen, oben ausrichten, Köpfe bleiben drin */
-@media (min-aspect-ratio: 16/9) {
-  .hero__bg img { object-fit: cover; object-position: 50% 15%; }
-}
+@keyframes drift { to { transform: scale(1.06); } }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(11,11,11,.1), rgba(11,11,11,.4) 80%),
-    linear-gradient(to bottom, rgba(11,11,11,0) 55%, var(--bg));
+    radial-gradient(ellipse 120% 80% at 50% 30%, rgba(11,11,11,0) 40%, rgba(11,11,11,.55) 100%),
+    linear-gradient(to bottom, rgba(11,11,11,0) 55%, var(--bg) 100%);
 }
 .hero__inner { width: 100%; max-width: 720px; }
-.hero__logo { margin: 0 auto; width: min(66vw, 330px, 38svh); } /* niedrige Fenster: Logo schrumpft, Gesichter bleiben frei */
-.hero__logo img { width: 100%; filter: drop-shadow(0 4px 30px rgba(0,0,0,.6)); }
+.hero__logo { margin: 0 auto; width: min(60vw, 330px, 36svh); } /* niedrige Fenster: Logo schrumpft, Gesichter bleiben frei */
+.hero__logo img { width: 100%; filter: drop-shadow(0 6px 34px rgba(0,0,0,.75)); }
 .hero__genre {
-  margin: 22px 0 28px;
-  font: 600 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
+  margin: 18px 0 26px;
+  font: 600 11px/1.4 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink);
+  opacity: .78;
 }
-.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.hero__cta { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.hero__next { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; padding: 4px 8px; }
+.hero__next-label { font: 600 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.hero__next-what { font: 600 16px/1.3 var(--text); color: var(--ink); border-bottom: 1px solid rgba(236,231,221,.35); padding-bottom: 2px; transition: border-color .15s; }
+.hero__next:hover .hero__next-what { border-color: var(--ink); }
 .hero__down {
-  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-  text-decoration: none; font-size: 22px; color: var(--ink-dim);
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  text-decoration: none; font-size: 20px; color: var(--ink-dim);
   animation: bob 2.4s ease-in-out infinite;
 }
 @keyframes bob { 50% { transform: translate(-50%, 6px); } }
+
+/* ── Sanftes Einblenden beim Scrollen (nur mit JS, nicht bei „Bewegung reduzieren“) ── */
+.js .reveal { opacity: 0; translate: 0 22px; transition: opacity .8s ease, translate .8s cubic-bezier(.2,.7,.2,1); }
+.js .reveal.is-in { opacity: 1; translate: none; }
 
 /* ── Buttons ────────────────────────────────── */
 .btn {
@@ -280,5 +308,6 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero__down { animation: none; }
+  .hero__bg img { animation: none; }
   .gallery img { transition: none; }
 }

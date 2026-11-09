@@ -166,6 +166,14 @@
     box.appendChild(f);
   });
 
+  // Logo-Glitch, Flackern und Glut nur laufen lassen, solange der Startbereich zu sehen ist
+  var hero = document.querySelector('.hero');
+  if (hero && 'IntersectionObserver' in window && !calm) {
+    new IntersectionObserver(function (entries) {
+      hero.classList.toggle('is-still', !entries[0].isIntersecting);
+    }).observe(hero);
+  }
+
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 })();

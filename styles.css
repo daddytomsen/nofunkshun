@@ -83,57 +83,43 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 }
 
 /* ── Hero ───────────────────────────────────── */
-/* Aufbau von hinten nach vorn:
-   1. hero__ambient  – dasselbe Foto, stark unscharf und dunkel, füllt die ganze Fläche
-   2. hero__bg img   – das scharfe Foto, ganz zu sehen (alle fünf), Ränder laufen weich aus
-   3. ::before       – leichte Vignette und Übergang in den Seitengrund
-   So hat das Foto keine Kante und wirkt nicht aufgeklebt. */
+/* Bis zum Fotoshooting (14.11.2026) ohne Startfoto: nur das Logo, groß und mittig.
+   Licht von hinten nach vorn:
+   ::before – kalter, schmaler Lichtkegel von oben (ein einzelner Spot) + dunkle Ecken.
+              Flackert bei jedem Logo-Glitch kurz mit (Bewegung siehe unten).
+   ::after  – schwache rote Glut tief hinter dem Logo, atmet langsam. */
 .hero {
   position: relative;
   min-height: 100svh;
-  display: grid; place-items: end center;
-  padding: 88px var(--pad) 64px;
+  display: grid; place-items: center;
+  padding: 88px var(--pad) 72px;
   text-align: center;
   isolation: isolate;
   overflow: clip;
 }
-.hero__ambient {
-  position: absolute; inset: -12%; z-index: -3;
-  background: url("assets/img/hero-hoch.webp") 50% 35% / cover no-repeat;
-  filter: grayscale(1) blur(40px) brightness(.42);
-}
-@media (min-aspect-ratio: 1/1) {
-  .hero__ambient { background-image: url("assets/img/hero-quer.webp"); }
-}
-.hero__bg { position: absolute; inset: 0; z-index: -2; }
-.hero__bg img {
-  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 15%;
-  filter: grayscale(1) contrast(1.1) brightness(.85);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 58%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 58%, transparent 100%);
-  transform-origin: 50% 35%;
-  animation: drift 26s ease-in-out infinite alternate;
-}
-/* Fenster schmaler als das Foto: Foto in voller Breite oben, Höhe folgt dem Bild,
-   die Maske bezieht sich dann auf das Foto selbst */
-@media (max-aspect-ratio: 16/9) {
-  .hero__bg img {
-    height: auto;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 62%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 62%, transparent 100%);
-  }
-}
-@keyframes drift { to { transform: scale(1.06); } }
+.hero::before, .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
 .hero::before {
-  content: ""; position: absolute; inset: 0; z-index: -1;
+  z-index: -1;
   background:
-    radial-gradient(ellipse 120% 80% at 50% 30%, rgba(11,11,11,0) 40%, rgba(11,11,11,.55) 100%),
-    linear-gradient(to bottom, rgba(11,11,11,0) 55%, var(--bg) 100%);
+    radial-gradient(ellipse 34% 72% at 50% -6%, rgba(236,231,221,.12), rgba(236,231,221,.035) 55%, rgba(236,231,221,0) 78%),
+    radial-gradient(ellipse 95% 80% at 50% 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,.6) 100%);
 }
-.hero__inner { width: 100%; max-width: 720px; }
-.hero__logo { margin: 0 auto; width: min(60vw, 330px, 36svh); } /* niedrige Fenster: Logo schrumpft, Gesichter bleiben frei */
-.hero__logo img { width: 100%; filter: drop-shadow(0 6px 34px rgba(0,0,0,.75)); }
+.hero::after {
+  z-index: -2;
+  background: radial-gradient(ellipse 42% 24% at 50% 68%, rgba(216,69,43,.22), rgba(216,69,43,.06) 50%, rgba(216,69,43,0) 75%);
+}
+.hero__inner { width: 100%; max-width: 760px; }
+.hero__logo { position: relative; margin: 0 auto; width: min(86vw, 640px, 58svh); }
+.hero__logo img { display: block; width: 100%; height: auto; filter: drop-shadow(0 8px 40px rgba(0,0,0,.6)); }
+/* Glitch-Kopien: rote und helle Fläche mit dem Logo als Schablone, liegen deckungsgleich
+   über dem Logo und sind nur während des Glitchs zu sehen (Bewegung siehe unten). */
+.hero__logo .glitch {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  -webkit-mask: url("assets/img/logo-1400.webp") center / 100% 100% no-repeat;
+          mask: url("assets/img/logo-1400.webp") center / 100% 100% no-repeat;
+}
+.glitch--red { background: var(--accent); }
+.glitch--ink { background: var(--ink); }
 .hero__genre {
   margin: 18px 0 26px;
   font: 600 11px/1.4 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink);
@@ -175,13 +161,16 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   scroll-margin-top: 56px;
 }
 .sec__title {
-  margin: 0 0 32px;
+  margin: 0 0 30px;
   /* Grunge läuft in Großbuchstaben sehr breit. Titel bleiben einzeilig und
-     werden so klein, dass das breiteste Wort (--title-em, Breite in em) passt. */
-  font: 400 min(clamp(38px, 11vw, 96px), calc((min(100vw, var(--max)) - 2 * var(--pad)) / var(--title-em, 8.9)))/1 var(--display);
+     werden so klein, dass das breiteste Wort (--title-em, Breite in em) passt.
+     09.11.: kleiner (max. 58 statt 96 px), damit der Inhalt darunter nicht untergeht. */
+  font: 400 min(clamp(30px, 8vw, 58px), calc((min(100vw, var(--max)) - 2 * var(--pad)) / var(--title-em, 8.9)))/1 var(--display);
   letter-spacing: 0; text-transform: uppercase;
   white-space: nowrap;
   transform: rotate(-1.5deg); transform-origin: left;
+  /* Nachglühen in Rost-Rot, wie die Glut hinter dem Logo */
+  text-shadow: 0 0 .16em rgba(216,69,43,.5), 0 0 .55em rgba(216,69,43,.32), 0 0 1.3em rgba(216,69,43,.18);
 }
 .sec__title::after {
   content: ""; display: block; width: 64px; height: 4px; margin-top: 14px;
@@ -200,8 +189,8 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .gig__day { display: block; font: 400 38px/1 var(--display); }
 .gig__mon { display: block; font: 600 12px/1.3 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
 .gig__year { display: block; font: 12px/1.3 var(--mono); color: var(--ink-dim); }
-.gig__where { margin: 0; font-weight: 700; font-size: 19px; line-height: 1.25; }
-.gig__meta { margin: 0; color: var(--ink-dim); font-size: 15px; }
+.gig__where { margin: 0; font-weight: 700; font-size: 21px; line-height: 1.25; }
+.gig__meta { margin: 0; color: var(--ink-dim); font-size: 16px; }
 .gig__links { display: flex; flex-wrap: wrap; gap: 10px; }
 .gig__links .btn { min-height: 42px; padding: 9px 16px; font-size: 13px; }
 .gigs__none { color: var(--ink-dim); }
@@ -310,7 +299,6 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero__down { animation: none; }
-  .hero__bg img { animation: none; }
   .gallery img { transition: none; }
 }
 
@@ -321,21 +309,36 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .flow {
   overflow-x: clip; margin: clamp(16px, 4vw, 40px) 0;
   border-block: 1px solid var(--line);
-  font: 400 clamp(26px, 6vw, 66px)/2.3 var(--display); text-transform: uppercase;
+  font-family: var(--display); text-transform: uppercase;
   white-space: nowrap; user-select: none;
+  container-type: inline-size;
 }
-.flow__row { display: flex; padding: .45em 0 .1em; }
-.flow__row span { display: inline-flex; align-items: center; padding-right: .4em; }
-.flow__row i { display: inline-block; width: .16em; height: .16em; margin: 0 .38em; background: var(--accent); border-radius: 50%; translate: 0 -.05em; }
+/* Alle vier Begriffe passen ganz in die Breite: die Zeile ist ~40 em breit,
+   also Schriftgröße = Breite / 42 (am Handy zwei Zeilen à ~23 em → / 25). Mit Luft am Rand. */
+.flow__row {
+  display: flex; justify-content: center; align-items: center;
+  padding: .45em var(--pad) .1em; line-height: 2.3;
+  font-size: min(44px, calc((100cqi - 2 * var(--pad)) / 42));
+}
+.flow__half { display: inline-flex; align-items: center; }
+@media (max-width: 759px) {
+  .flow__row { flex-direction: column; line-height: 1.9; padding-bottom: .3em; font-size: calc((100cqi - 2 * var(--pad)) / 25); }
+  .flow__mid { display: none !important; }
+}
+.flow__row i { flex-shrink: 0; display: inline-block; width: .16em; height: .16em; margin: 0 .38em; background: var(--accent); border-radius: 50%; translate: 0 -.05em; }
 
 .stage {
-  position: relative; margin: 0; height: clamp(320px, 78svh, 860px); overflow: clip;
+  position: relative; margin: 0; height: clamp(240px, 62vw, min(78svh, 860px)); overflow: clip; /* Handy: flacher, damit alle fünf im Bild bleiben */
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
           mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
 }
 .stage img { position: absolute; left: 0; top: -15%; width: 100%; height: 130%; object-fit: cover; object-position: 50% 45%; filter: brightness(.7); }
+/* Handy: Foto nur wenig größer als die Fläche, sonst fallen Sänger und Gitarrist an den Rändern raus */
+@media (max-width: 759px) {
+  .stage img { top: -7.5%; height: 115%; }
+}
 .stage figcaption {
-  position: absolute; left: var(--pad); bottom: 18%;
+  position: absolute; left: var(--pad); bottom: 18%; text-shadow: 0 1px 12px rgba(0,0,0,.8);
   font: 600 12px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink);
 }
 
@@ -350,6 +353,52 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   /* Ankommen: Logo, Genre und Knöpfe erscheinen nacheinander */
   @keyframes intro { from { opacity: 0; translate: 0 26px; filter: blur(8px); } }
   .hero__logo  { animation: intro 1.1s cubic-bezier(.2,.7,.2,1) .1s backwards; }
+
+  /* Logo-Glitch (Variante A): 0,75 s Störung, dann 4,25 s Ruhe, endlos. Die Prozentwerte sind
+     die Schritte der 0,75-s-Störung auf einen 5-s-Takt umgerechnet (×0,15). steps(1) = harte
+     Sprünge statt Überblendung. Läuft nur, solange der Start sichtbar ist (.hero.is-still per JS). */
+  .hero__logo img     { animation: glitch-jitter 5s steps(1, end) 1.3s infinite; }
+  .glitch--red        { animation: glitch-slice-a 5s steps(1, end) 1.3s infinite; }
+  .glitch--ink        { animation: glitch-slice-b 5s steps(1, end) 1.3s infinite; }
+  .hero::before { animation: light-flicker 5s steps(1, end) 1.3s infinite; }
+  .hero::after  { animation: ember 7s ease-in-out infinite alternate; }
+  .hero.is-still .hero__logo img, .hero.is-still .glitch, .hero.is-still::before, .hero.is-still::after { animation-play-state: paused; }
+  @keyframes light-flicker {
+    0%    { opacity: .3; }
+    1.8%  { opacity: 1; }
+    3.6%  { opacity: .15; }
+    5.4%  { opacity: .85; }
+    7.2%  { opacity: .4; }
+    10.8%, 100% { opacity: 1; }
+  }
+  @keyframes ember { from { opacity: .45; } to { opacity: 1; } }
+  @keyframes glitch-jitter {
+    0%    { translate: 3px 0;     skew: 0; }
+    1.8%  { translate: -4px 1px;  skew: -4deg 0; }
+    3.6%  { translate: 2px -1px;  skew: 0; }
+    5.4%  { translate: -2px 0;    skew: 3deg 0; }
+    7.2%  { translate: 4px 0;     skew: 0; }
+    9%    { translate: -1px 0;    skew: -1deg 0; }
+    10.8%, 100% { translate: none; skew: none; }
+  }
+  @keyframes glitch-slice-a {
+    0%    { opacity: .9; translate: -10px 0; clip-path: inset(12% 0 70% 0); }
+    1.8%  { translate: 8px 0;   clip-path: inset(58% 0 22% 0); }
+    3.6%  { translate: -5px 0;  clip-path: inset(30% 0 52% 0); }
+    5.4%  { translate: 12px 0;  clip-path: inset(78% 0 6% 0); }
+    7.2%  { translate: -4px 0;  clip-path: inset(2% 0 86% 0); }
+    9%    { translate: 3px 0;   clip-path: inset(44% 0 40% 0); }
+    10.8%, 100% { opacity: 0; translate: none; clip-path: inset(50% 0 50% 0); }
+  }
+  @keyframes glitch-slice-b {
+    0%    { opacity: .8; translate: 7px 0;  clip-path: inset(64% 0 18% 0); }
+    1.8%  { translate: -9px 0;  clip-path: inset(20% 0 66% 0); }
+    3.6%  { translate: 6px 0;   clip-path: inset(82% 0 4% 0); }
+    5.4%  { translate: -7px 0;  clip-path: inset(40% 0 44% 0); }
+    7.2%  { translate: 5px 0;   clip-path: inset(8% 0 78% 0); }
+    9%    { translate: -2px 0;  clip-path: inset(70% 0 16% 0); }
+    10.8%, 100% { opacity: 0; translate: none; clip-path: inset(50% 0 50% 0); }
+  }
   .hero__genre { animation: intro .9s cubic-bezier(.2,.7,.2,1) .45s backwards; }
   .hero__cta   { animation: intro .9s cubic-bezier(.2,.7,.2,1) .65s backwards; }
 
@@ -362,10 +411,7 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 
     /* Start löst sich auf: Foto sinkt langsamer (Tiefe), Schrift steigt und verblasst */
     .hero { view-timeline: --hero; }
-    @keyframes hero-sink { to { translate: 0 22%; opacity: .45; } }
     @keyframes hero-lift { to { translate: 0 -14vh; scale: .92; opacity: 0; } }
-    .hero__bg      { animation: hero-sink linear both; animation-timeline: --hero; animation-range: exit 0% exit 100%; }
-    .hero__ambient { animation: hero-sink linear both; animation-timeline: --hero; animation-range: exit 0% exit 100%; }
     .hero__inner   { animation: hero-lift linear both; animation-timeline: --hero; animation-range: exit 0% exit 55%; }
     .hero__down    { animation: hero-lift linear both; animation-timeline: --hero; animation-range: exit 0% exit 20%; }
 
@@ -373,8 +419,9 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
     .sec__title { view-timeline: --title; }
     @keyframes title-wipe {
       /* oben -150 %: die Schrift ragt fast eine Zeilenhöhe über ihren Kasten hinaus */
-      from { clip-path: inset(-150% 100% -30% -20%); translate: -6% 0; }
-      to   { clip-path: inset(-150% -20% -30% -20%); translate: 0 0; }
+      /* unten -90 %: Platz für das rote Nachglühen */
+      from { clip-path: inset(-150% 100% -90% -20%); translate: -6% 0; }
+      to   { clip-path: inset(-150% -20% -90% -20%); translate: 0 0; }
     }
     @keyframes bar-grow { from { scale: 0 1; } }
     .sec__title { animation: title-wipe linear both; animation-timeline: --title; animation-range: entry 10% cover 42%; }
@@ -401,8 +448,13 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 
     /* Laufband: läuft beim Scrollen seitlich durch */
     .flow { view-timeline: --flow; }
-    @keyframes flow-left  { from { translate: 4% 0; }  to { translate: -30% 0; } }
-    .flow__row         { animation: flow-left  linear both; animation-timeline: --flow; animation-range: cover 0% cover 100%; }
+    /* Hälften gleiten von beiden Seiten herein und stehen ab der Bildschirmmitte ganz still */
+    @keyframes flow-from-left  { from { translate: -45% 0; opacity: 0; } }
+    @keyframes flow-from-right { from { translate: 45% 0; opacity: 0; } }
+    @keyframes flow-dot { from { scale: 0; } }
+    .flow__half:first-child { animation: flow-from-left  cubic-bezier(.2,.7,.2,1) both; animation-timeline: --flow; animation-range: entry 0% cover 45%; }
+    .flow__half:last-child  { animation: flow-from-right cubic-bezier(.2,.7,.2,1) both; animation-timeline: --flow; animation-range: entry 0% cover 45%; }
+    .flow__mid              { animation: flow-dot linear both; animation-timeline: --flow; animation-range: cover 30% cover 45%; }
 
     /* Bühnenbild: Foto bewegt sich langsamer als die Seite, zoomt dabei leicht heraus */
     .stage { view-timeline: --stage; }
@@ -410,5 +462,9 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
     @keyframes caption-in { from { opacity: 0; translate: -30px 0; } }
     .stage img { animation: stage-depth linear both; animation-timeline: --stage; animation-range: cover 0% cover 100%; }
     .stage figcaption { animation: caption-in linear both; animation-timeline: --stage; animation-range: entry 40% cover 50%; }
+    @media (max-width: 759px) {
+      @keyframes stage-depth-m { from { translate: 0 -6%; } to { translate: 0 6%; } }
+      .stage img { animation-name: stage-depth-m; }
+    }
   }
 }

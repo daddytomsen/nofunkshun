@@ -11,9 +11,9 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="NOFUNKSHUN">
   <meta property="og:description" content="Post-Rock · Stoner · Metal aus Aachen.">
-  <meta property="og:image" content="assets/img/hero-quer.webp">
+  <meta property="og:image" content="assets/img/wassenrock-0022.webp">
   <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261108e">
+  <link rel="stylesheet" href="styles.css?v=20261109g">
   <script>
     // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
     (function () {
@@ -50,14 +50,12 @@
   <main id="top">
     <!-- ── HERO ─────────────────────────────────────────── -->
     <section class="hero">
-      <div class="hero__ambient" aria-hidden="true"></div>
-      <picture class="hero__bg">
-        <source media="(min-aspect-ratio: 1/1)" srcset="assets/img/hero-quer.webp">
-        <img src="assets/img/hero-hoch.webp" alt="" fetchpriority="high">
-      </picture>
+      <!-- Startfoto vorerst raus (Fotoshooting 14.11.2026), nur das Logo -->
       <div class="hero__inner">
         <h1 class="hero__logo">
-          <img src="assets/img/logo.webp" alt="Nofunkshun" width="900" height="872">
+          <img src="assets/img/logo-1400.webp" srcset="assets/img/logo.webp 900w, assets/img/logo-1400.webp 1400w" sizes="min(86vw, 640px, 58svh)" alt="Nofunkshun" width="1400" height="1356" fetchpriority="high">
+          <span class="glitch glitch--red" aria-hidden="true"></span>
+          <span class="glitch glitch--ink" aria-hidden="true"></span>
         </h1>
         <p class="hero__genre">Post-Rock · Stoner · Metal · Aachen</p>
         <div class="hero__cta">
@@ -87,7 +85,7 @@
 
     <!-- ── Laufband: Genre, fließt beim Scrollen gegeneinander ── -->
     <div class="flow" aria-hidden="true">
-      <div class="flow__row"><span>Post-Rock<i></i>Stoner<i></i>Metal<i></i>Aachen<i></i>Post-Rock<i></i>Stoner<i></i>Metal<i></i>Aachen<i></i>Post-Rock<i></i>Stoner<i></i>Metal<i></i>Aachen<i></i></span></div>
+      <div class="flow__row"><span class="flow__half">Post-Rock<i></i>Stoner</span><i class="flow__mid"></i><span class="flow__half">Metal<i></i>Aachen</span></div>
     </div>
 
     <!-- ── MUSIK ────────────────────────────────────────── -->
@@ -129,7 +127,7 @@
 
     <!-- ── Bühnenbild mit Tiefe ── -->
     <figure class="stage" aria-hidden="true">
-      <img src="assets/img/wassenrock-0047.webp" alt="" loading="lazy">
+      <img src="assets/img/wassenrock-0022.webp" alt="" loading="lazy">
       <figcaption>Wassenrock 2024</figcaption>
     </figure>
 
@@ -139,16 +137,18 @@
       <div class="band">
         <div class="bio">
           <div lang="de">
-            <p class="lead">Laut soll es sein, wenn Nofunkshun auf der Bühne steht: Die Gitarren kreischen, die Bässe wummern, das Schlagzeug hämmert.</p>
-            <p>Die Aachener Band ist eine fünfköpfige deutsch-niederländische Truppe. Gegründet wurde sie 2013, damals noch in anderer Besetzung und unter anderem Namen, um zusammen kreativ zu sein und die Liebe zur Musik zu teilen. Nach Zuwachs am Gesang und einem Gitarristenwechsel zeigen Nofunkshun diese Liebe jetzt auch der Öffentlichkeit.</p>
-            <p>Festlegen lassen wollen sie sich nicht. Progressive Rock, Post-Rock und Stoner Rock passen oft, und doch lassen sich ihre Songs nur schwer in eine Schublade stecken. Gesungen wird über Verlangen, Freude und Ängste bis hin zu tragischen Verlusten.</p>
-            <p>Auf unzähligen Bühnen in Clubs und Kneipen, regional und überregional, hat sich die Band in über einem Jahrzehnt eine feste Fangemeinde erspielt. 2019 erschien die EP „Black Moon“ mit vier Songs. Zurzeit arbeitet die Band an neuen Songs.</p>
+            <p>Die Aachener Band Nofunkshun ist eine fünfköpfige deutsch-niederländische Truppe. Damals noch in einer anderen Besetzung und unter einem anderen Künstlernamen wurde die Band 2013 gegründet, um zusammen kreativ zu sein und die Liebe zur Musik miteinander zu teilen. Nach dem Zuwachs eines Sängers und einem Gitarristenwechsel möchten die Jungs von Nofunkshun diese Liebe zur Musik jetzt auch der Öffentlichkeit zeigen.</p>
+            <p>Besonders wichtig ist der Band, dass sie sich nicht auf ein bestimmtes Genre festlegen lässt, was sich in ihren vielfältigen Einflüssen widerspiegelt. Obwohl Genres wie Progressive Rock, Post-Rock und Stonerrock oft passend erscheinen, lassen sich ihre Songs nur schwer in eine Schublade stecken.</p>
+            <p>Bei bereits unzähligen Auftritten in diversen Clubs, Kneipen und auf Bühnen, regional und überregional, rocken Nofunkshun seit nunmehr einem Jahrzehnt und haben sich eine feste Fangemeinschaft herangezogen. Im Jahr 2019 haben sie die EP „Black Moon“ mit vier Songs aufgenommen. Zurzeit arbeitet die Band kräftig an neuen Songs, von denen einige auch beim Wassenrock-Festival 2024 präsentiert wurden.</p>
+            <p class="lead">Massiver Sound zwischen treibendem Metal und hypnotischem Stoner-Vibe. Kein Firlefanz – nur ehrliche Energie, dicke Riffs und rohe Emotionen. Musik, die nicht in Schubladen passt, sondern ins Mark geht.</p>
+            <p>Gesungen wird über Verlangen, Freude und Ängste bis hin zu tragischen Verlusten. Alles Themen, die die Band mit ihrer Musik verarbeitet und vereint.</p>
           </div>
           <div lang="en">
-            <p class="lead">It has to be loud when Nofunkshun hit the stage: guitars screaming, bass rumbling, drums pounding.</p>
-            <p>The band from Aachen is a five-piece German-Dutch crew. It was founded in 2013, back then with a different line-up and under a different name, to be creative together and share a love of music. After adding a singer and changing guitarists, Nofunkshun now want to share that love with everyone.</p>
-            <p>They refuse to be pinned down. Progressive rock, post-rock and stoner rock often fit, yet their songs are hard to put in a box. They sing about desire, joy and fear, all the way to tragic loss.</p>
-            <p>Countless shows in clubs, bars and on stages, local and further afield, have earned the band a loyal following over more than a decade. In 2019 they released the four-track EP “Black Moon”. The band is currently working on new songs.</p>
+            <p>Nofunkshun from Aachen are a five-piece German-Dutch crew. The band was founded in 2013, back then with a different line-up and under a different name, to be creative together and share their love of music. After gaining a singer and changing guitarists, the Nofunkshun guys now want to share that love of music with the public as well.</p>
+            <p>What matters most to the band is not being tied to a particular genre, which shows in their wide range of influences. Although genres like progressive rock, post-rock and stoner rock often seem to fit, their songs are hard to put in a box.</p>
+            <p>With countless shows in clubs, bars and on stages, local and further afield, Nofunkshun have been rocking for a decade now and have built a loyal following. In 2019 they recorded the four-track EP “Black Moon”. The band is currently hard at work on new songs, some of which were already played at Wassenrock Festival 2024.</p>
+            <p class="lead">Massive sound between driving metal and hypnotic stoner vibes. No frills – just honest energy, fat riffs and raw emotion. Music that doesn’t fit in a box but cuts to the bone.</p>
+            <p>They sing about desire, joy and fear, all the way to tragic loss – themes the band works through and brings together in their music.</p>
           </div>
         </div>
         <ul class="members">
@@ -165,18 +165,17 @@
     <section class="sec" id="fotos">
       <h2 class="sec__title"><span lang="de">Fotos</span><span lang="en">Photos</span></h2>
       <div class="gallery">
-        <a href="assets/img/wassenrock-0022.webp" class="g--wide"><img src="assets/img/wassenrock-0022.webp" alt="Nofunkshun auf der Bühne vor dem Banner, Wassenrock 2024" loading="lazy"></a>
+        <a href="assets/img/wassenrock-0047.webp" class="g--wide"><img src="assets/img/wassenrock-0047.webp" alt="Die Band auf der Wassenrock-Bühne" loading="lazy"></a>
         <a href="assets/img/wassenrock-0004.webp"><img src="assets/img/wassenrock-0004.webp" alt="Gesang" loading="lazy" style="object-position:50% 20%"></a>
         <a href="assets/img/wassenrock-0090.webp"><img src="assets/img/wassenrock-0090.webp" alt="Bass" loading="lazy" style="object-position:50% 30%"></a>
         <a href="assets/img/wassenrock-0016.webp"><img src="assets/img/wassenrock-0016.webp" alt="Gitarre" loading="lazy" style="object-position:50% 30%"></a>
-        <a href="assets/img/wassenrock-0012.webp"><img src="assets/img/wassenrock-0012.webp" alt="Gitarre" loading="lazy"></a>
-        <a href="assets/img/wassenrock-0053.webp" class="g--wide"><img src="assets/img/wassenrock-0053.webp" alt="Schlagzeug" loading="lazy" style="object-position:50% 70%"></a>
         <a href="assets/img/wassenrock-0074.webp"><img src="assets/img/wassenrock-0074.webp" alt="Bass und Gitarre nebeneinander" loading="lazy" style="object-position:50% 35%"></a>
+        <a href="assets/img/wassenrock-0012.webp" class="g--wide"><img src="assets/img/wassenrock-0012.webp" alt="Gitarre" loading="lazy"></a>
+        <a href="assets/img/wassenrock-0022.webp" class="g--wide"><img src="assets/img/wassenrock-0022.webp" alt="Nofunkshun auf der Bühne vor dem Banner, Wassenrock 2024" loading="lazy"></a>
         <a href="assets/img/wassenrock-0028.webp"><img src="assets/img/wassenrock-0028.webp" alt="Schlagzeug mit Nofunkshun-Bassdrum" loading="lazy" style="object-position:50% 75%"></a>
-        <a href="assets/img/wassenrock-0047.webp" class="g--wide"><img src="assets/img/wassenrock-0047.webp" alt="Die Band auf der Wassenrock-Bühne" loading="lazy"></a>
-        <a href="assets/img/wassenrock-0042.webp" class="g--wide"><img src="assets/img/wassenrock-0042.webp" alt="Gitarre und Bass" loading="lazy" style="object-position:50% 65%"></a>
-        <a href="assets/img/wassenrock-0081.webp"><img src="assets/img/wassenrock-0081.webp" alt="Gesang, Nahaufnahme" loading="lazy" style="object-position:70% 50%"></a>
         <a href="assets/img/wassenrock-0025.webp"><img src="assets/img/wassenrock-0025.webp" alt="Bass vor dem Banner" loading="lazy" style="object-position:50% 55%"></a>
+        <a href="assets/img/wassenrock-0042.webp" class="g--wide"><img src="assets/img/wassenrock-0042.webp" alt="Gitarre und Bass" loading="lazy" style="object-position:50% 65%"></a>
+        <a href="assets/img/wassenrock-0081.webp" class="g--wide"><img src="assets/img/wassenrock-0081.webp" alt="Gesang, Nahaufnahme" loading="lazy" style="object-position:70% 50%"></a>
       </div>
       <p class="gallery__credit">
         <span lang="de">Fotos: Armin Zedler · Wassenrock 2024</span><span lang="en">Photos: Armin Zedler · Wassenrock 2024</span>
@@ -205,7 +204,7 @@
     </p>
   </footer>
 
-  <script src="gigs.js?v=20261108e"></script>
-  <script src="script.js?v=20261108e"></script>
+  <script src="gigs.js?v=20261109g"></script>
+  <script src="script.js?v=20261109g"></script>
 </body>
 </html>

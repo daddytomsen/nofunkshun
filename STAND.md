@@ -1,5 +1,7 @@
 # Stand – nofunkshun-website
 
+**09.11.2026 · ONLINE UNTER https://nofunkshun.de** (DNS bei INWX, `CNAME` im Repo, HTTPS erzwungen, Zertifikat für nofunkshun.de + www bis 07.02.2027, verlängert GitHub selbst; www und die alte github.io-Adresse leiten auf nofunkshun.de um). Offen: Domain im GitHub-Konto verifizieren (TXT-Eintrag bei INWX), damit niemand sie auf GitHub belegen kann.
+
 **08.11.2026 · ONLINE: https://daddytomsen.github.io/nofunkshun/** (Repo daddytomsen/nofunkshun, öffentlich, Pages aus `main` /root, HTTPS an). Spotify-Player live geprüft. Domain nofunkshun.de am 08.11.2026 gekauft (INWX). Datei `CNAME` liegt lokal, **noch nicht gepusht**: erst wenn die DNS-Einträge bei INWX stehen und auflösen, sonst leitet github.io auf eine tote Adresse um.
 
 **09.11.2026 · Start ohne Foto (lokal, noch nicht hochgeladen):** Startfoto auf Thomas' Wunsch vorerst raus, weil am **Sa 14.11.2026 ein Fotoshooting** ist und danach neue Fotos kommen. Start zeigt nur das Logo, groß und mittig (bis 640 px statt 330 px, neue scharfe Fassung `logo-1400.webp` aus dem Band-Original, in derselben hellen Farbe wie `logo.webp`). `hero-hoch.webp`/`hero-quer.webp` liegen noch in `assets/img`, werden aber nicht mehr verwendet. Bühnenfoto vor „Band“ ist jetzt Thomas' Auswahl Wassenrock 0022 (Banner + alle fünf); 0047 rückt dafür in der Galerie an die erste Stelle. Auf dem Handy ist das Bühnenfoto flacher und zoomt nicht, damit Sänger und Gitarrist am Rand bleiben. og:image = 0022. Danach: Domain einrichten.

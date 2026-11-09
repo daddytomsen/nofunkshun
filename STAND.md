@@ -1,6 +1,6 @@
 # Stand – nofunkshun-website
 
-**09.11.2026 · ONLINE UNTER https://nofunkshun.de** (DNS bei INWX, `CNAME` im Repo, HTTPS erzwungen, Zertifikat für nofunkshun.de + www bis 07.02.2027, verlängert GitHub selbst; www und die alte github.io-Adresse leiten auf nofunkshun.de um). Offen: Domain im GitHub-Konto verifizieren (TXT-Eintrag bei INWX), damit niemand sie auf GitHub belegen kann.
+**09.11.2026 · ONLINE UNTER https://nofunkshun.de** (DNS bei INWX, `CNAME` im Repo, HTTPS erzwungen, Zertifikat für nofunkshun.de + www bis 07.02.2027, verlängert GitHub selbst; www und die alte github.io-Adresse leiten auf nofunkshun.de um). Domain im GitHub-Konto verifiziert (09.11.2026, TXT `_github-pages-challenge-daddytomsen` bei INWX – **dauerhaft stehen lassen**).
 
 **08.11.2026 · ONLINE: https://daddytomsen.github.io/nofunkshun/** (Repo daddytomsen/nofunkshun, öffentlich, Pages aus `main` /root, HTTPS an). Spotify-Player live geprüft. Domain nofunkshun.de am 08.11.2026 gekauft (INWX). Datei `CNAME` liegt lokal, **noch nicht gepusht**: erst wenn die DNS-Einträge bei INWX stehen und auflösen, sonst leitet github.io auf eine tote Adresse um.
 

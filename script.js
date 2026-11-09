@@ -140,7 +140,7 @@
   /* ── Rückfall fürs Einblenden: nur wo CSS-Scroll-Animationen fehlen (z. B. Firefox) ── */
   var nativeScroll = window.CSS && CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
   if (!nativeScroll && 'IntersectionObserver' in window && !calm) {
-    var items = document.querySelectorAll('.sec > :not(.gallery), .gallery > a');
+    var items = document.querySelectorAll('.sec > *, .member');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
@@ -148,9 +148,61 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     items.forEach(function (n, i) {
       n.classList.add('reveal');
-      if (n.parentNode.classList.contains('gallery')) n.style.transitionDelay = (i % 4) * 70 + 'ms';
+      if (n.classList.contains('member')) n.style.transitionDelay = (i % 5) * 70 + 'ms';
       io.observe(n);
     });
+  }
+
+  /* ── Bildstrecke: Pfeile springen ein Foto weiter, Zähler folgt dem Wischen ── */
+  var show = document.querySelector('.show');
+  if (show) {
+    var track = show.querySelector('.show__track');
+    var slides = track.children;
+    var count = show.querySelector('.show__count b');
+    var prev = show.querySelector('[data-dir="-1"]');
+    var next = show.querySelector('[data-dir="1"]');
+    var current = 0;
+    var pad = function () { return parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0; };
+    var update = function () {
+      // aktuelles Foto = das, dessen linke Kante der Einrastkante am nächsten liegt
+      var edge = track.scrollLeft + pad(), best = 0, dist = Infinity;
+      for (var i = 0; i < slides.length; i++) {
+        var d = Math.abs(slides[i].offsetLeft - edge);
+        if (d < dist) { dist = d; best = i; }
+      }
+      var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+      if (atEnd) best = slides.length - 1;
+      current = best;
+      count.textContent = String(best + 1).padStart(2, '0');
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = atEnd;
+    };
+    var go = function (dir) {
+      var i = Math.max(0, Math.min(slides.length - 1, current + dir));
+      track.scrollTo({ left: slides[i].offsetLeft - pad(), behavior: calm ? 'auto' : 'smooth' });
+    };
+    prev.addEventListener('click', function () { go(-1); });
+    next.addEventListener('click', function () { go(1); });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    });
+    var ticking = false;
+    track.addEventListener('scroll', function () {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () { ticking = false; update(); });
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* ── Nach-oben-Knopf: sichtbar, sobald der Startbereich nicht mehr zu sehen ist ── */
+  var toTop = document.querySelector('.to-top');
+  var hero = document.querySelector('.hero');
+  if (toTop && hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      toTop.classList.toggle('is-on', !entries[0].isIntersecting);
+    }).observe(hero);
   }
 
   /* ── Spotify erst nach Klick laden ──────── */

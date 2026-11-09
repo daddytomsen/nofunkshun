@@ -249,21 +249,54 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .band { display: grid; gap: 40px; }
 .bio p { margin: 0 0 1em; max-width: 62ch; }
 .bio .lead { font-size: clamp(20px, 5vw, 26px); line-height: 1.35; font-weight: 700; }
-.members { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); align-self: start; }
-.members li { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.members b { font-size: 18px; }
-.members span { font: 13px/1.8 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim); }
+.band__photo { margin: 0; align-self: start; border: 1px solid var(--line); background: var(--bg-2); }
+.band__photo img { display: block; width: 100%; height: auto; }
+/* Mitglieder als Porträtkarten (09.11., Fotos Armin Zedler, schwarz-weiß) */
+.members {
+  list-style: none; margin: 48px 0 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.member { display: grid; gap: 4px; }
+.member img {
+  display: block; width: 100%; aspect-ratio: 4 / 5; height: auto; object-fit: cover;
+  background: var(--bg-2); margin-bottom: 8px; filter: contrast(1.02);
+}
+.member b { font-size: 17px; line-height: 1.2; }
+.member span { font: 12px/1.5 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim); }
+/* Handy: fünf Karten in zwei Spalten → die letzte (Schlagzeug) liegt quer über beide */
+.member:last-child { grid-column: span 2; }
+.member:last-child img { aspect-ratio: 16 / 10; }
+.gallery__credit.members__credit { margin-top: 20px; }
 
 /* ── Fotos ──────────────────────────────────── */
-.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.gallery a { display: block; overflow: clip; aspect-ratio: 1; background: var(--bg-2); }
-.gallery .g--wide { grid-column: span 2; aspect-ratio: 2 / 1.2; }
-.gallery img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform .6s;
+/* Bildstrecke (09.11.): wischen auf dem Handy, Pfeile am Rechner; Fotos in ihrem eigenen Format */
+.show { position: relative; margin: 0 calc(var(--pad) * -1); }
+.show__track {
+  list-style: none; margin: 0; padding: 0 var(--pad);
+  display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad); scrollbar-width: none;
 }
-/* Fotos sind schon schwarz-weiß gespeichert; beim Drüberfahren nur Zoom */
-.gallery a:hover img, .gallery a:focus-visible img { transform: scale(1.03); }
+.show__track::-webkit-scrollbar { display: none; }
+.show__track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.show__slide { flex: none; scroll-snap-align: start; background: var(--bg-2); }
+.show__track { align-items: center; }
+/* Handy: jedes Foto fast bildschirmbreit und ganz zu sehen (Querformat flacher, Hochformat höher) */
+.show__slide img { display: block; width: calc(100vw - 2 * var(--pad) - 28px); height: auto; max-height: 64svh; object-fit: contain; }
+/* Rechner: alle Fotos gleich hoch, Breite folgt dem Format */
+@media (min-width: 760px) {
+  .show__track { align-items: stretch; }
+  .show__slide img { height: clamp(320px, 64vh, 620px); width: auto; max-width: none; max-height: none; }
+}
+.show__nav { display: flex; align-items: center; gap: 16px; margin: 16px var(--pad) 0; }
+.show__btn {
+  width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer;
+  background: none; color: var(--ink); border: 1px solid var(--ink-dim); font: 20px/1 var(--text);
+  transition: background-color .15s, color .15s, opacity .15s;
+}
+.show__btn:hover, .show__btn:focus-visible { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.show__btn:disabled { opacity: .3; pointer-events: none; }
+.show__count { font: 600 13px/1 var(--mono); letter-spacing: .16em; color: var(--ink-dim); min-width: 7ch; text-align: center; }
+.show__count b { color: var(--ink); }
 .gallery__credit { margin: 14px 0 0; font: 12px/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim); }
 
 /* ── Kontakt ────────────────────────────────── */
@@ -334,16 +367,16 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   .gig { grid-template-columns: 92px 1fr auto; align-items: center; gap: 0 28px; }
   .gig__links { grid-column: 3; }
   .release { grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
-  .band { grid-template-columns: 1.6fr 1fr; gap: 64px; }
-  .gallery { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .gallery .g--wide { grid-column: span 2; aspect-ratio: 2 / 1; }
-  .gallery .g--big { grid-row: span 2; aspect-ratio: 1; }
+  .band { grid-template-columns: 1.4fr 1fr; gap: 64px; }
+  .members { grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 64px; }
+  .member:last-child { grid-column: auto; }
+  .member:last-child img { aspect-ratio: 4 / 5; }
+  .show__track { gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero__down { animation: none; }
-  .gallery img { transition: none; }
 }
 
 /* ══ Fließende Bänder zwischen den Abschnitten ═══════════════════════ */
@@ -385,6 +418,27 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   position: absolute; left: var(--pad); bottom: 18%; text-shadow: 0 1px 12px rgba(0,0,0,.8);
   font: 600 12px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink);
 }
+
+/* Nach-oben-Knopf (09.11.): läuft unten rechts mit, sichtbar ab dem Ende des Startbereichs (script.js) */
+.to-top {
+  position: fixed; z-index: 45;
+  right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
+  width: 48px; height: 48px; display: grid; place-items: center;
+  background: rgba(11,11,11,.82); color: var(--ink); border: 1px solid var(--ink-dim);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  font: 22px/1 var(--text); text-decoration: none;
+  opacity: 0; translate: 0 12px; pointer-events: none;
+  transition: opacity .25s, translate .25s, background-color .15s, color .15s, border-color .15s;
+}
+.to-top.is-on { opacity: 1; translate: 0 0; pointer-events: auto; }
+.to-top:hover, .to-top:focus-visible { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* Handy: Fußzeile endet über dem Knopf, damit er die Zeichen dort nicht verdeckt */
+@media (max-width: 759px) { .foot { padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 72px)); } }
+@media (min-width: 760px) {
+  .to-top { right: 24px; bottom: 24px; }
+  .foot { padding-right: calc(var(--pad) + 72px); }   /* Platz für den Knopf */
+}
+@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
 
 /* Fortschritt oben – nur mit Scroll-Animation sichtbar */
 .progress { position: fixed; inset: 0 0 auto 0; z-index: 60; height: 3px; background: var(--accent); transform-origin: 0 50%; scale: 0 1; pointer-events: none; }
@@ -480,22 +534,23 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 
     /* Inhalte gleiten herein */
     @keyframes rise { from { opacity: 0; translate: 0 56px; } }
-    .sec > :not(.sec__title, .gallery) { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 85%; }
+    .sec > :not(.sec__title) { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 85%; }
 
     /* Termine und Titel der EP nacheinander */
     @keyframes slide-in { from { opacity: 0; translate: -40px 0; } }
-    .gig, .tracks li, .members li { animation: slide-in linear both; animation-timeline: view(); animation-range: entry 10% entry 100%; }
+    .gig, .tracks li { animation: slide-in linear both; animation-timeline: view(); animation-range: entry 10% entry 100%; }
 
     /* EP-Cover kippt in die Gerade */
     @keyframes cover-in { from { opacity: 0; rotate: -6deg; scale: .86; } }
     .release__cover { animation: cover-in linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
 
-    /* Galerie: Kacheln wachsen herein, Fotos laufen in der Kachel langsamer (Tiefe) */
-    .gallery a { view-timeline: --tile; animation: tile-in linear both; animation-timeline: --tile; animation-range: entry 0% cover 32%; }
-    .gallery a:nth-child(even) { animation-range: entry 12% cover 42%; }
-    @keyframes tile-in { from { opacity: 0; scale: .84; translate: 0 70px; } }
-    .gallery img { height: 116%; animation: tile-depth linear both; animation-timeline: --tile; animation-range: cover 0% cover 100%; }
-    @keyframes tile-depth { from { translate: 0 0; } to { translate: 0 -13.8%; } }
+    /* Porträtkarten kommen nacheinander herein */
+    @keyframes card-in { from { opacity: 0; translate: 0 48px; } }
+    .member { animation: card-in linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+    .member:nth-child(2) { animation-range: entry 6% cover 34%; }
+    .member:nth-child(3) { animation-range: entry 12% cover 38%; }
+    .member:nth-child(4) { animation-range: entry 18% cover 42%; }
+    .member:nth-child(5) { animation-range: entry 24% cover 46%; }
 
     /* Laufband: läuft beim Scrollen seitlich durch */
     .flow { view-timeline: --flow; }

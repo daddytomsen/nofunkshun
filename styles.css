@@ -176,6 +176,20 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   content: ""; display: block; width: 64px; height: 4px; margin-top: 14px;
   background: var(--accent); transform: rotate(1.5deg);
 }
+/* Titel schreiben sich beim Scrollen (09.11.): die Grunge-Buchstaben als SVG-Pfad,
+   freigelegt von Pinselstrichen in Schreibreihenfolge (Maske). Erzeugt mit
+   tools/titel-schreiben.py; die Breite je Wort steht am SVG. Ohne Scroll-Animation
+   oder bei „Bewegung reduzieren“ steht das Wort sofort fertig da.
+   Das SVG ist 1 em hoch wie die Zeile; die Grundlinie liegt wie bei Grunge-Text
+   1,1 em unter der Oberkante, die Oberlängen ragen sichtbar darüber hinaus.
+   Der echte Text steht für Screenreader und Suche unsichtbar daneben (.vh). */
+.sec__title--write { text-shadow: none; }
+.write {
+  display: block; height: 1em; overflow: visible;
+  filter: drop-shadow(0 0 .16em rgba(216,69,43,.45)) drop-shadow(0 0 .5em rgba(216,69,43,.22)) drop-shadow(0 0 1.1em rgba(216,69,43,.1));
+}
+.write__ink { fill: var(--ink); }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .kicker { margin: 0 0 6px; font: 600 12px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-dim); }
 
 /* ── Gigs ───────────────────────────────────── */
@@ -425,6 +439,13 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
     }
     @keyframes bar-grow { from { scale: 0 1; } }
     .sec__title { animation: title-wipe linear both; animation-timeline: --title; animation-range: entry 10% cover 42%; }
+    /* Geschriebene Titel: jeder Strich schreibt sich in seinem Abschnitt der Zeitachse (--a … --b
+       steht am Pfad), danach blendet die Maske ganz auf, damit kein Pinselrand fehlt */
+    .sec__title--write { animation: none; }
+    @keyframes write-pen { from { stroke-dashoffset: 1.02; } to { stroke-dashoffset: 0; } }
+    .write__pen path { stroke-dasharray: 1 2; animation: write-pen linear both; animation-timeline: --title; animation-range: cover var(--a) cover var(--b); }
+    @keyframes write-done { from { opacity: 0; } }
+    .write__done { animation: write-done linear both; animation-timeline: --title; animation-range: cover 40% cover 41%; }
     .sec__title::after { transform-origin: left; animation: bar-grow linear both; animation-timeline: --title; animation-range: cover 25% cover 50%; }
 
     /* Inhalte gleiten herein */

@@ -110,16 +110,33 @@
       ulNext.appendChild(li);
     });
 
+    // Vergangene Gigs: kompakte Liste wie hinten auf dem Tourshirt
     past.forEach(function (g) {
-      var li = el('li', 'gig');
-      var where = el('p', 'gig__where');
-      where.appendChild(el('span', 'gig__when', whenText(g, l)));
-      var name = place(g);
-      if (g.info) { var a = el('a', null, name); a.href = g.info; a.target = '_blank'; a.rel = 'noopener'; where.appendChild(a); }
-      else where.appendChild(document.createTextNode(name));
-      li.appendChild(where);
+      var p = parts(g.datum);
+      var li = el('li');
+      var row = el(g.info ? 'a' : 'span', 'past__row');
+      if (g.info) { row.href = g.info; row.target = '_blank'; row.rel = 'noopener'; }
+      var when = p.d ? String(p.d).padStart(2, '0') + '.' + String(p.m).padStart(2, '0') + '.' + String(p.y).slice(2)
+               : p.m ? String(p.m).padStart(2, '0') + '.' + String(p.y).slice(2) : String(p.y);
+      row.appendChild(el('span', 'past__date', when + ' '));
+      var city = g.stadt && g.ort.indexOf(g.stadt) === -1 ? g.stadt + ' · ' : '';
+      row.appendChild(document.createTextNode(city + g.ort));
+      li.appendChild(row);
       ulPast.appendChild(li);
     });
+
+    // Kennzahl nur aus den Einträgen selbst
+    var cities = {};
+    past.forEach(function (g) { cities[g.stadt || g.ort] = 1; });
+    var nCities = Object.keys(cities).length;
+    var from = past.length ? parts(past[past.length - 1].datum).y : 0;
+    var to = past.length ? parts(past[0].datum).y : 0;
+    var span = from === to ? String(from) : from + '–' + to;
+    document.getElementById('gigs-stats').textContent = past.length
+      ? (l === 'en'
+          ? past.length + (past.length === 1 ? ' show' : ' shows') + ' · ' + nCities + (nCities === 1 ? ' city' : ' cities') + ' · ' + span
+          : past.length + ' Gigs · ' + nCities + (nCities === 1 ? ' Stadt' : ' Städte') + ' · ' + span)
+      : '';
 
     document.getElementById('gigs-none').hidden = next.length > 0;
     document.querySelector('.past').hidden = past.length === 0;

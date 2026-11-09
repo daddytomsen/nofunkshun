@@ -13,7 +13,7 @@
   <meta property="og:description" content="Post-Rock · Stoner · Metal aus Aachen.">
   <meta property="og:image" content="assets/img/band-closeup.webp">
   <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261109r">
+  <link rel="stylesheet" href="styles.css?v=20261109w">
   <script>
     // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
     (function () {
@@ -101,10 +101,12 @@
         <span lang="en">New dates coming soon. Want us to play your place? Get in touch.</span>
       </p>
 
-      <details class="past">
-        <summary><span lang="de">Vergangene Gigs</span><span lang="en">Past shows</span></summary>
-        <ul class="gigs gigs--past" id="gigs-past"></ul>
-      </details>
+      <div class="past">
+        <h3 class="vh"><span lang="de">Vergangene Gigs</span><span lang="en">Past shows</span></h3>
+        <p class="past__head" aria-hidden="true"><span>Nofunkshun</span><span>Live</span></p>
+        <p class="past__stats" id="gigs-stats"></p>
+        <ul class="past__list" id="gigs-past"></ul>
+      </div>
     </section>
 
     <!-- ── Laufband: Genre, fließt beim Scrollen gegeneinander ── -->
@@ -140,13 +142,6 @@
           <span lang="de">Player laden</span><span lang="en">Load player</span>
         </button>
       </div>
-
-      <figure class="teaser">
-        <video controls preload="none" playsinline poster="assets/video/black-moon-teaser.jpg" width="1280" height="720">
-          <source src="assets/video/black-moon-teaser.mp4" type="video/mp4">
-        </video>
-        <figcaption>Black Moon – Teaser</figcaption>
-      </figure>
     </section>
 
     <!-- ── Bühnenbild mit Tiefe ── -->
@@ -201,6 +196,9 @@
           <b>Marcel Shun</b><span lang="de">Schlagzeug</span><span lang="en">Drums</span>
         </li>
       </ul>
+      <figure class="band__stage">
+        <img src="assets/img/band-stage.webp" alt="Nofunkshun zu fünft auf der Wassenrock-Bühne, hinten das Banner mit dem Bandlogo" loading="lazy" width="1600" height="1065">
+      </figure>
       <p class="gallery__credit members__credit"><span lang="de">Fotos:</span><span lang="en">Photos:</span> Armin Zedler · Wassenrock 2024</p>
     </section>
 
@@ -272,7 +270,7 @@
   <!-- Nach oben: erscheint, sobald der Startbereich aus dem Bild ist -->
   <a class="to-top" href="#top"><span aria-hidden="true">↑</span><span class="vh"><span lang="de">Nach oben</span><span lang="en">Back to top</span></span></a>
 
-  <script src="gigs.js?v=20261109r"></script>
-  <script src="script.js?v=20261109r"></script>
+  <script src="gigs.js?v=20261109w"></script>
+  <script src="script.js?v=20261109w"></script>
 </body>
 </html>

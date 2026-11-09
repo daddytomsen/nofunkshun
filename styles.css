@@ -32,7 +32,7 @@ body {
      und alle Scroll-Animationen hingen an einem Bereich, der nie scrollt.
      Seitliches Überstehen fängt html { overflow-x: clip } ab. */
 }
-img, video { display: block; max-width: 100%; height: auto; }
+img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 
 /* Körnung über allem – gibt den rohen Druck-Look */
@@ -209,19 +209,17 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .gig__links .btn { min-height: 42px; padding: 9px 16px; font-size: 13px; }
 .gigs__none { color: var(--ink-dim); }
 
-.past { margin-top: 40px; }
-.past summary {
-  cursor: pointer; list-style: none;
-  font: 600 13px/1.4 var(--mono); letter-spacing: .18em; text-transform: uppercase;
-  padding: 12px 0; color: var(--ink-dim);
-}
-.past summary::-webkit-details-marker { display: none; }
-.past summary::before { content: "+ "; color: var(--accent); }
-.past[open] summary::before { content: "– "; }
-.gigs--past .gig { grid-template-columns: 1fr; padding: 12px 0; }
-.gigs--past .gig__date { display: none; }
-.gigs--past .gig__where { font-size: 16px; font-weight: 600; }
-.gigs--past .gig__when { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); margin-right: 10px; }
+/* Vergangene Gigs: gerahmte Liste wie hinten auf dem Tourshirt */
+.past { margin-top: 64px; padding: 36px 16px 32px; border: 2px solid var(--ink); text-align: center; }
+.past__head { margin: 0; font: 400 clamp(20px, 6vw, 30px)/2.1 var(--display); text-transform: uppercase; }
+.past__head span { display: block; }
+.past__stats { margin: 4px 0 24px; font: 600 12px/1.6 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.past__list { list-style: none; margin: 0 auto; padding: 0; max-width: 820px; }
+.past__list li { break-inside: avoid; padding: 6px 0; font: 600 12px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.past__row { display: block; text-decoration: none; }
+.past__date { color: var(--ink-dim); margin-right: .2ch; }
+a.past__row:hover, a.past__row:focus-visible { color: var(--accent); }
+a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: var(--accent); }
 
 /* ── Musik ──────────────────────────────────── */
 .sec--music { position: relative; }
@@ -241,9 +239,6 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .embed.is-loaded { padding: 0; border: 0; }
 .embed iframe { width: 100%; height: 352px; border: 0; border-radius: 12px; }
 
-.teaser { margin: 40px 0 0; }
-.teaser video { width: 100%; background: #000; border: 1px solid var(--line); }
-.teaser figcaption { margin-top: 8px; font: 12px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim); }
 
 /* ── Band ───────────────────────────────────── */
 .band { display: grid; gap: 40px; }
@@ -266,6 +261,8 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 /* Handy: fünf Karten in zwei Spalten → die letzte (Schlagzeug) liegt quer über beide */
 .member:last-child { grid-column: span 2; }
 .member:last-child img { aspect-ratio: 16 / 10; }
+.band__stage { margin: 32px 0 0; border: 1px solid var(--line); background: var(--bg-2); }
+.band__stage img { display: block; width: 100%; height: auto; }
 .gallery__credit.members__credit { margin-top: 20px; }
 
 /* ── Fotos ──────────────────────────────────── */
@@ -366,9 +363,15 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   .sec { padding-top: 112px; padding-bottom: 112px; }
   .gig { grid-template-columns: 92px 1fr auto; align-items: center; gap: 0 28px; }
   .gig__links { grid-column: 3; }
+  .past { padding: 48px 32px 40px; }
+  .past__head { font-size: 44px; }
+  .past__stats { letter-spacing: .3em; }
+  .past__list { columns: 2; column-gap: 48px; text-align: left; }
+  .past__row { padding-left: 10.2ch; text-indent: -10.2ch; }
   .release { grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
   .band { grid-template-columns: 1.4fr 1fr; gap: 64px; }
   .members { grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 64px; }
+  .band__stage { margin-top: 48px; }
   .member:last-child { grid-column: auto; }
   .member:last-child img { aspect-ratio: 4 / 5; }
   .show__track { gap: 12px; }

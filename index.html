@@ -13,7 +13,7 @@
   <meta property="og:description" content="Post-Rock · Stoner · Metal aus Aachen.">
   <meta property="og:image" content="assets/img/band-closeup.webp">
   <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261109x">
+  <link rel="stylesheet" href="styles.css?v=20261111b">
   <script>
     // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
     (function () {
@@ -56,12 +56,33 @@
           <img src="assets/img/logo-1400.webp" srcset="assets/img/logo.webp 900w, assets/img/logo-1400.webp 1400w" sizes="min(86vw, 640px, 58svh)" alt="Nofunkshun" width="1400" height="1356" fetchpriority="high">
           <span class="glitch glitch--red" aria-hidden="true"></span>
           <span class="glitch glitch--ink" aria-hidden="true"></span>
+          <!-- Zeichenfläche für den Teaser: nur sichtbar, solange der Vorgeschmack läuft (teaser.js) -->
+          <canvas class="hero__eq" aria-hidden="true"></canvas>
         </h1>
         <p class="hero__genre">Post-Rock · Stoner · Metal · Aachen</p>
         <div class="hero__cta">
           <a class="btn btn--solid" href="https://open.spotify.com/artist/3h1Febi28MziUNpcq5khGA" target="_blank" rel="noopener">
             <span lang="de">Auf Spotify hören</span><span lang="en">Listen on Spotify</span>
           </a>
+          <!-- Teaser: 30 s Vorgeschmack auf einen neuen Song. Das Logo wird solange zum Equalizer (teaser.js).
+               Daten und Ton: assets/teaser/, erzeugt im Videoprojekt mit scripts/web_teaser.py -->
+          <div class="teaser" data-teaser data-teaser-base="assets/teaser/">
+            <p class="teaser__title">Ghost of Achilles</p>
+            <button type="button" class="teaser__btn" aria-pressed="false">
+              <span class="teaser__icon" aria-hidden="true"></span>
+              <span class="teaser__label">
+                <span data-zustand="aus"><span lang="de">Reinhören</span><span lang="en">Listen</span></span>
+                <span data-zustand="an"><span lang="de">Stopp</span><span lang="en">Stop</span></span>
+              </span>
+              <!-- Eine sichtbare Zeile „Neuer Song · 30 s mit Ton“ gibt es bewusst nicht (11.11.2026).
+                   Für Screenreader steht hier weiter, dass ein Klick Ton abspielt. -->
+              <span class="vh"><span lang="de">: Ghost of Achilles, neuer Song, 30 Sekunden mit Ton</span><span lang="en">: Ghost of Achilles, new song, 30 seconds with sound</span></span>
+            </button>
+            <span class="teaser__time" aria-hidden="true">0:00 / 0:30</span>
+            <p class="teaser__error" hidden>
+              <span lang="de">Ton konnte nicht geladen werden</span><span lang="en">Sound could not be loaded</span>
+            </p>
+          </div>
           <a class="hero__next" href="#live" id="next-gig-btn" hidden></a>
           <ul class="app-row hero__social">
             <li><a href="https://www.instagram.com/nofunkshun/" target="_blank" rel="noopener" aria-label="Instagram"><span class="app app--instagram"><img src="assets/icons/instagram.svg" alt="" width="32" height="32"></span></a></li>
@@ -257,7 +278,16 @@
   <!-- Nach oben: erscheint, sobald der Startbereich aus dem Bild ist -->
   <a class="to-top" href="#top"><span aria-hidden="true">↑</span><span class="vh"><span lang="de">Nach oben</span><span lang="en">Back to top</span></span></a>
 
-  <script src="gigs.js?v=20261109x"></script>
-  <script src="script.js?v=20261109x"></script>
+  <!-- Kleine Leiste, solange der Vorgeschmack läuft und der Knopf nicht zu sehen ist -->
+  <div class="teaser-mini" hidden>
+    <span>Ghost of Achilles</span>
+    <span class="teaser-mini__time">0:00 / 0:30</span>
+    <button type="button"><span lang="de">Stopp</span><span lang="en">Stop</span></button>
+  </div>
+
+  <script src="gigs.js?v=20261111b"></script>
+  <script src="script.js?v=20261111b"></script>
+  <script src="assets/teaser/ghost_of_achilles_30s.js?v=20261111b" defer></script>
+  <script src="teaser.js?v=20261111b" defer></script>
 </body>
 </html>

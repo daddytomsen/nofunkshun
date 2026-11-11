@@ -18,6 +18,7 @@
   --display: "Grunge", "Impact", "Arial Narrow", sans-serif;
   --text: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-pill: 999px;    /* alle Bedienelemente sind Pillen (Design-System, 10.11.2026) */
   color-scheme: dark;
 }
 
@@ -67,11 +68,11 @@ html[data-lang="en"] body [lang="de"] { display: none !important; }
 .bar__mark img { width: 40px; height: auto; opacity: 0; transition: opacity .3s; }
 .bar.is-solid .bar__mark img { opacity: 1; }
 .bar__nav { display: none; }
-.lang { margin-left: auto; display: flex; border: 1px solid var(--ink-dim); }
+.lang { margin-left: auto; display: flex; gap: 2px; padding: 3px; border: 1px solid var(--ink-dim); border-radius: var(--radius-pill); }
 .lang button {
   appearance: none; border: 0; background: transparent; color: var(--ink-dim);
   font: 600 13px/1 var(--mono); letter-spacing: .08em;
-  padding: 9px 11px; min-width: 44px; min-height: 36px; cursor: pointer;
+  padding: 8px 12px; min-width: 44px; min-height: 34px; cursor: pointer; border-radius: var(--radius-pill);
 }
 html[data-lang="de"] .lang [data-set-lang="de"],
 html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color: var(--bg); }
@@ -145,7 +146,7 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 48px; padding: 12px 22px;
-  border: 2px solid var(--ink); background: transparent; color: var(--ink);
+  border: 2px solid var(--ink); border-radius: var(--radius-pill); background: transparent; color: var(--ink);
   font: 700 14px/1.2 var(--text); letter-spacing: .12em; text-transform: uppercase;
   text-decoration: none; cursor: pointer;
   transition: background .15s, color .15s, border-color .15s;
@@ -287,7 +288,7 @@ a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: va
 .show__nav { display: flex; align-items: center; gap: 16px; margin: 16px var(--pad) 0; }
 .show__btn {
   width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer;
-  background: none; color: var(--ink); border: 1px solid var(--ink-dim); font: 20px/1 var(--text);
+  background: none; color: var(--ink); border: 1px solid var(--ink-dim); border-radius: var(--radius-pill); font: 20px/1 var(--text);
   transition: background-color .15s, color .15s, opacity .15s;
 }
 .show__btn:hover, .show__btn:focus-visible { background: var(--ink); color: var(--bg); border-color: var(--ink); }
@@ -426,7 +427,7 @@ a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: va
   position: fixed; z-index: 45;
   right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
   width: 48px; height: 48px; display: grid; place-items: center;
-  background: rgba(11,11,11,.82); color: var(--ink); border: 1px solid var(--ink-dim);
+  background: rgba(11,11,11,.82); color: var(--ink); border: 1px solid var(--ink-dim); border-radius: var(--radius-pill);
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   font: 22px/1 var(--text); text-decoration: none;
   opacity: 0; translate: 0 12px; pointer-events: none;
@@ -576,3 +577,125 @@ a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: va
     }
   }
 }
+
+
+/* ══ Teaser: Vorgeschmack auf einen neuen Song (10.11.2026) ══════════════════
+   Das Logo im Startbereich wird für 30 s zum Equalizer (teaser.js), danach ist alles wie vorher.
+   Bauteil „Teaser“ im Design-System. Bedienung:
+     - EIN Knopf, der sagt, was er tut: „Reinhören“ ↔ „Stopp“
+     - keine Zeile darüber: nur Titel, Knopf, Zeit (11.11.2026: so fügt es sich am besten ein)
+     - kein Fortschrittsbalken: der Songtitel läuft von links nach rechts voll (--teaser-p von 0 bis 1)
+   Neuer Song: Titel im HTML ändern, assets/teaser/<song>_30s.m4a + .js austauschen (Videoprojekt,
+   scripts/web_teaser.py). */
+.teaser {
+  container-type: inline-size;
+  width: min(100%, 400px);
+  display: grid; grid-template-columns: auto 1fr; align-items: center;
+  column-gap: 14px; row-gap: 10px;
+  padding-top: 14px; border-top: 1px solid var(--line);
+  text-align: left;
+}
+/* Songtitel in der Bandschrift, eine Zeile. Die Schrift läuft breit (0,76 em je Zeichen), deshalb richtet
+   sich die Größe nach der Breite des Bauteils. Der Kasten ist genau so breit wie der Text, damit das
+   Volllaufen am ersten Buchstaben beginnt und am letzten endet. */
+.teaser__title {
+  grid-column: 1 / -1; justify-self: start; white-space: nowrap;
+  /* Die Bandschrift ragt oben und links über ihren Zeilenkasten hinaus (das G von „Ghost“). Beim Volllaufen
+     wird nur innerhalb des Kastens gemalt, das G war deshalb angeschnitten. Darum Innenabstand, den ein
+     gleich großer negativer Außenabstand wieder aufhebt: mehr Malfläche, gleiche Lage. */
+  padding: .26em .12em .06em .1em; margin: -.26em -.12em -.06em -.1em;
+  font: 400 clamp(20px, 7.4cqi, 30px)/1.3 var(--display); color: var(--ink);
+}
+/* Läuft der Song: Der Titel ist erst blass und füllt sich von links mit der Schriftfarbe. Eine schmale
+   rostrote Kante markiert die Stelle. Harte Farbsprünge, kein weicher Verlauf. Bei 0 ist nichts gefüllt,
+   auch nicht der linke Überstand des ersten Buchstabens. */
+.teaser.is-an .teaser__title {
+  --x: calc(var(--teaser-p, 0) * 100%);
+  background: linear-gradient(90deg,
+    var(--ink) 0, var(--ink) calc(var(--x) - 3px),
+    var(--accent) calc(var(--x) - 3px), var(--accent) var(--x),
+    rgba(236, 231, 221, .26) var(--x), rgba(236, 231, 221, .26) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+.teaser__time {
+  justify-self: end;
+  font: 600 11px/1.4 var(--mono); letter-spacing: .08em; color: var(--ink-dim); font-variant-numeric: tabular-nums;
+}
+.teaser__error { grid-column: 1 / -1; margin: 0; font: 600 11px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim); }
+
+/* Knopf: Pille wie alle Buttons der Seite. Zeichen ▶ / ■ sind reine Formen, keine Icon-Datei. */
+.teaser__btn {
+  appearance: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+  min-height: 48px; padding: 0 22px 0 18px;
+  border: 2px solid var(--ink); border-radius: var(--radius-pill); background: transparent; color: var(--ink);
+  font: 700 14px/1 var(--text); letter-spacing: .12em; text-transform: uppercase;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.teaser__btn:hover { background: var(--ink); color: var(--bg); }
+.teaser__btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.teaser__icon { display: grid; place-items: center; flex: none; }
+.teaser__icon::before {
+  content: ""; width: 11px; height: 13px; background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);                 /* ▶ */
+}
+.teaser__btn[aria-pressed="true"] .teaser__icon::before { width: 11px; height: 11px; clip-path: none; }   /* ■ */
+.teaser__btn[aria-pressed="false"] [data-zustand="an"],
+.teaser__btn[aria-pressed="true"]  [data-zustand="aus"] { display: none; }
+
+/* ── Bühne: Zeichenfläche im Logo ───────────── */
+/* Liegt in <h1 class="hero__logo"> (position: relative) und steht seitlich 14 %, oben/unten 6 % über. */
+.hero__eq {
+  position: absolute; left: -14%; top: -6%; width: 128%; height: 112%; z-index: 1;
+  pointer-events: none; display: none;
+}
+.hero.is-teaser .hero__eq { display: block; }
+/* Solange der Equalizer läuft, zeichnet die Fläche das Logo (auch das Zurückblenden zum normalen Logo).
+   Das <img> bleibt für Screenreader und Layout stehen, ist aber unsichtbar. Die vorhandenen Glitch-Kopien
+   ruhen. Danach ist alles wieder wie vorher. */
+.hero.is-teaser .hero__logo img { visibility: hidden; animation: none; }
+.hero.is-teaser .hero__logo .glitch { display: none; }
+
+/* Lichtkegel und Glut des Startbereichs gehen mit: Bass → Glut, Höhen → Spot.
+   Nur opacity/transform, damit es beim Compositor bleibt. */
+.hero.is-teaser::before { animation: none; opacity: calc(.75 + var(--eq-hoch, 0) * .5); }
+.hero.is-teaser::after  { animation: none; opacity: calc(.7 + var(--eq-bass, 0) * 1.6); transform: scale(calc(1 + var(--eq-bass, 0) * .18)); }
+
+/* ── Kleine Leiste, wenn der Knopf aus dem Bild ist (Ton muss immer abschaltbar sein) ── */
+.teaser-mini {
+  position: fixed; left: 12px; bottom: 12px; z-index: 45;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 12px;
+  padding: 6px 6px 6px 16px;
+  background: var(--bg); border: 1px solid var(--ink-dim); border-radius: var(--radius-pill);
+  font: 600 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
+}
+.teaser-mini[hidden] { display: none; }
+.teaser-mini__time { font-variant-numeric: tabular-nums; color: var(--ink); }
+.teaser-mini button {
+  appearance: none; min-width: 48px; min-height: 44px; padding: 0 14px; cursor: pointer;
+  border: 0; border-radius: var(--radius-pill); background: var(--ink); color: var(--bg);
+  font: inherit; letter-spacing: inherit; text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teaser__btn { transition: none; }
+}
+
+/* Handy: Mit dem Teaser muss der Knopf „Reinhören“ ohne Scrollen zu sehen sein. Ein iPhone mit Safari-Leisten
+   hat nur etwa 664 px Höhe, im WebKit-Test (11.11.2026) war der Knopf dort an der Unterkante angeschnitten.
+   Deshalb oben und zwischen den Teilen etwas enger; das Logo bleibt gleich groß. Nur auf sehr niedrigen
+   Bildschirmen (unter 620 px) wird auch das Logo kleiner. Ohne Teaser im HTML gilt nichts davon. */
+@media (max-width: 759px) {
+  .hero:has(.teaser) { padding-top: 72px; }
+  .hero:has(.teaser) .hero__genre { margin: 12px 0 18px; }
+  .hero:has(.teaser) .hero__cta { gap: 14px; }
+  .hero:has(.teaser) .teaser { padding-top: 12px; }   /* Zeilenabstand bleibt 10 px: bei 8 stieß das A von „Achilles“ an die Zeile darüber */
+}
+@media (max-width: 759px) and (max-height: 620px) {
+  .hero:has(.teaser) .hero__logo { width: min(86vw, 640px, 40svh); }
+}
+
+/* Der Teaser steht im Startbereich zwischen Spotify-Button und nächstem Gig */
+.hero__cta .teaser__btn { grid-column: 1; }
+.hero__cta .teaser__time { grid-column: 2; }

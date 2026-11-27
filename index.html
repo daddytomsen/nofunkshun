@@ -17,7 +17,7 @@
   <meta property="og:image:height" content="1200">
   <meta property="og:image:alt" content="Die fünf von Nofunkshun in schwarzen Lederjacken vor dunklem Hintergrund">
   <link rel="preload" href="assets/fonts/grunge.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261111b">
+  <link rel="stylesheet" href="styles.css?v=20261127b">
   <script>
     // Sprache vor dem ersten Zeichnen setzen, damit nichts flackert
     (function () {
@@ -57,7 +57,10 @@
       <!-- Startfoto vorerst raus (Fotoshooting 14.11.2026), nur das Logo -->
       <div class="hero__inner">
         <h1 class="hero__logo">
+          <!-- Bandfoto im Glitch: Schimmer hinter dem Logo und Foto in den Buchstaben (nur mit Bewegung, styles.css) -->
+          <span class="hero__ghost" aria-hidden="true"></span>
           <img src="assets/img/logo-1400.webp" srcset="assets/img/logo.webp 900w, assets/img/logo-1400.webp 1400w" sizes="min(86vw, 640px, 58svh)" alt="Nofunkshun" width="1400" height="1356" fetchpriority="high">
+          <span class="glitch glitch--photo" aria-hidden="true"></span>
           <span class="glitch glitch--red" aria-hidden="true"></span>
           <span class="glitch glitch--ink" aria-hidden="true"></span>
           <!-- Zeichenfläche für den Teaser: nur sichtbar, solange der Vorgeschmack läuft (teaser.js) -->
@@ -289,9 +292,9 @@
     <button type="button"><span lang="de">Stopp</span><span lang="en">Stop</span></button>
   </div>
 
-  <script src="gigs.js?v=20261111b"></script>
-  <script src="script.js?v=20261111b"></script>
-  <script src="assets/teaser/ghost_of_achilles_30s.js?v=20261111b" defer></script>
-  <script src="teaser.js?v=20261111b" defer></script>
+  <script src="gigs.js?v=20261127b"></script>
+  <script src="script.js?v=20261127b"></script>
+  <script src="assets/teaser/ghost_of_achilles_30s.js?v=20261127b" defer></script>
+  <script src="teaser.js?v=20261127b" defer></script>
 </body>
 </html>

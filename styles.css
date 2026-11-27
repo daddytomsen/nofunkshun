@@ -119,6 +119,14 @@ html[data-lang="en"] .lang [data-set-lang="en"] { background: var(--ink); color:
   -webkit-mask: url("assets/img/logo-1400.webp") center / 100% 100% no-repeat;
           mask: url("assets/img/logo-1400.webp") center / 100% 100% no-repeat;
 }
+/* Bandfoto im Glitch: .glitch--photo zeigt das Foto in der Logoform, .hero__ghost als weichen Schimmer
+   dahinter. Ohne Bewegung bleiben beide unsichtbar und das Foto wird gar nicht erst geladen. */
+.hero__logo { isolation: isolate; }
+.hero__ghost {
+  position: absolute; inset: -8% -12%; z-index: -1; opacity: 0; pointer-events: none;
+  -webkit-mask: radial-gradient(closest-side, #000 35%, transparent 100%);
+          mask: radial-gradient(closest-side, #000 35%, transparent 100%);
+}
 .glitch--red { background: var(--accent); }
 .glitch--ink { background: var(--ink); }
 .hero__genre {
@@ -455,50 +463,76 @@ a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: va
   @keyframes intro { from { opacity: 0; translate: 0 26px; filter: blur(8px); } }
   .hero__logo  { animation: intro 1.1s cubic-bezier(.2,.7,.2,1) .1s backwards; }
 
-  /* Logo-Glitch (Variante A): 0,75 s Störung, dann 4,25 s Ruhe, endlos. Die Prozentwerte sind
-     die Schritte der 0,75-s-Störung auf einen 5-s-Takt umgerechnet (×0,15). steps(1) = harte
+  /* Logo-Glitch (Variante A): 0,75 s Störung, dann 3,25 s Ruhe, endlos (4-s-Takt seit 27.11.2026, vorher 5 s).
+     Die Prozentwerte sind die Schritte der 0,75-s-Störung auf den 4-s-Takt umgerechnet (×0,1875). steps(1) = harte
      Sprünge statt Überblendung. Läuft nur, solange der Start sichtbar ist (.hero.is-still per JS). */
-  .hero__logo img     { animation: glitch-jitter 5s steps(1, end) 1.3s infinite; }
-  .glitch--red        { animation: glitch-slice-a 5s steps(1, end) 1.3s infinite; }
-  .glitch--ink        { animation: glitch-slice-b 5s steps(1, end) 1.3s infinite; }
-  .hero::before { animation: light-flicker 5s steps(1, end) 1.3s infinite; }
+  .hero__logo img     { animation: glitch-jitter 4s steps(1, end) 1.3s infinite; }
+  .glitch--red        { animation: glitch-slice-a 4s steps(1, end) 1.3s infinite; }
+  .glitch--ink        { animation: glitch-slice-b 4s steps(1, end) 1.3s infinite; }
+  /* Bandfoto: bei jedem zweiten Glitch, also alle 8 s (8-s-Takt, gleicher Start) reißt das Foto in Streifen auf,
+     rastet in den Buchstaben ein, steht gut eine Sekunde mit langsamem Heranzoomen und zerfällt
+     wieder in Streifen. Harte Sprünge nur in den Stör-Phasen (steps), dazwischen weich (ease). */
+  .glitch--photo { background: url("assets/img/band-glitch.webp") 50% 42% / cover; animation: glitch-photo 8s 1.3s infinite; }
+  .hero__ghost   { background: url("assets/img/band-glitch.webp") 50% 42% / cover; animation: glitch-ghost 8s 1.3s infinite; }
+  .hero::before { animation: light-flicker 4s steps(1, end) 1.3s infinite; }
   .hero::after  { animation: ember 7s ease-in-out infinite alternate; }
-  .hero.is-still .hero__logo img, .hero.is-still .glitch, .hero.is-still::before, .hero.is-still::after { animation-play-state: paused; }
+  .hero.is-still .hero__logo img, .hero.is-still .glitch, .hero.is-still .hero__ghost, .hero.is-still::before, .hero.is-still::after { animation-play-state: paused; }
+  @keyframes glitch-photo {
+    0%    { opacity: 0;   translate: -12px 0; scale: 1.08; clip-path: inset(46% 0 38% 0); animation-timing-function: steps(1, end); }
+    1.25%    { opacity: .55; translate: 10px 0;  clip-path: inset(62% 0 20% 0); animation-timing-function: steps(1, end); }
+    2.5%    { opacity: .2;  translate: -7px 0;  clip-path: inset(14% 0 64% 0); animation-timing-function: steps(1, end); }
+    3.75%    { opacity: .7;  translate: 5px 0;   clip-path: inset(28% 0 34% 0); animation-timing-function: steps(1, end); }
+    5%    { opacity: .45; translate: -3px 0;  clip-path: inset(6% 0 46% 0);  animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+    8.75%    { opacity: 1;   translate: 0 0;     scale: 1.06; clip-path: inset(0 0 0 0); animation-timing-function: linear; }
+    21.25%   { opacity: 1;   translate: 0 0;     scale: 1;    clip-path: inset(0 0 0 0); animation-timing-function: steps(1, end); }
+    22.5%   { opacity: .75; translate: 9px 0;   clip-path: inset(0 0 42% 0);  animation-timing-function: steps(1, end); }
+    23.75%   { opacity: .5;  translate: -11px 0; clip-path: inset(52% 0 8% 0);  animation-timing-function: steps(1, end); }
+    25%   { opacity: .25; translate: 4px 0;   clip-path: inset(34% 0 50% 0); animation-timing-function: steps(1, end); }
+    26.25%, 100% { opacity: 0; translate: none; scale: 1; clip-path: inset(50% 0 50% 0); }
+  }
+  @keyframes glitch-ghost {
+    0%    { opacity: 0;   translate: 14px 0; scale: 1.1;  animation-timing-function: steps(1, end); }
+    1.875%  { opacity: .1;  translate: -10px 0;             animation-timing-function: steps(1, end); }
+    3.75%    { opacity: .03; translate: 6px 0;               animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+    10%    { opacity: .16; translate: 0 0;    scale: 1.06; animation-timing-function: linear; }
+    21.25%   { opacity: .16; scale: 1.02;                    animation-timing-function: ease-in; }
+    26.25%, 100% { opacity: 0; translate: none; scale: 1; }
+  }
   @keyframes light-flicker {
     0%    { opacity: .3; }
-    1.8%  { opacity: 1; }
-    3.6%  { opacity: .15; }
-    5.4%  { opacity: .85; }
-    7.2%  { opacity: .4; }
-    10.8%, 100% { opacity: 1; }
+    2.25%  { opacity: 1; }
+    4.5%  { opacity: .15; }
+    6.75%  { opacity: .85; }
+    9%  { opacity: .4; }
+    13.5%, 100% { opacity: 1; }
   }
   @keyframes ember { from { opacity: .45; } to { opacity: 1; } }
   @keyframes glitch-jitter {
     0%    { translate: 3px 0;     skew: 0; }
-    1.8%  { translate: -4px 1px;  skew: -4deg 0; }
-    3.6%  { translate: 2px -1px;  skew: 0; }
-    5.4%  { translate: -2px 0;    skew: 3deg 0; }
-    7.2%  { translate: 4px 0;     skew: 0; }
-    9%    { translate: -1px 0;    skew: -1deg 0; }
-    10.8%, 100% { translate: none; skew: none; }
+    2.25%  { translate: -4px 1px;  skew: -4deg 0; }
+    4.5%  { translate: 2px -1px;  skew: 0; }
+    6.75%  { translate: -2px 0;    skew: 3deg 0; }
+    9%  { translate: 4px 0;     skew: 0; }
+    11.25%    { translate: -1px 0;    skew: -1deg 0; }
+    13.5%, 100% { translate: none; skew: none; }
   }
   @keyframes glitch-slice-a {
     0%    { opacity: .9; translate: -10px 0; clip-path: inset(12% 0 70% 0); }
-    1.8%  { translate: 8px 0;   clip-path: inset(58% 0 22% 0); }
-    3.6%  { translate: -5px 0;  clip-path: inset(30% 0 52% 0); }
-    5.4%  { translate: 12px 0;  clip-path: inset(78% 0 6% 0); }
-    7.2%  { translate: -4px 0;  clip-path: inset(2% 0 86% 0); }
-    9%    { translate: 3px 0;   clip-path: inset(44% 0 40% 0); }
-    10.8%, 100% { opacity: 0; translate: none; clip-path: inset(50% 0 50% 0); }
+    2.25%  { translate: 8px 0;   clip-path: inset(58% 0 22% 0); }
+    4.5%  { translate: -5px 0;  clip-path: inset(30% 0 52% 0); }
+    6.75%  { translate: 12px 0;  clip-path: inset(78% 0 6% 0); }
+    9%  { translate: -4px 0;  clip-path: inset(2% 0 86% 0); }
+    11.25%    { translate: 3px 0;   clip-path: inset(44% 0 40% 0); }
+    13.5%, 100% { opacity: 0; translate: none; clip-path: inset(50% 0 50% 0); }
   }
   @keyframes glitch-slice-b {
     0%    { opacity: .8; translate: 7px 0;  clip-path: inset(64% 0 18% 0); }
-    1.8%  { translate: -9px 0;  clip-path: inset(20% 0 66% 0); }
-    3.6%  { translate: 6px 0;   clip-path: inset(82% 0 4% 0); }
-    5.4%  { translate: -7px 0;  clip-path: inset(40% 0 44% 0); }
-    7.2%  { translate: 5px 0;   clip-path: inset(8% 0 78% 0); }
-    9%    { translate: -2px 0;  clip-path: inset(70% 0 16% 0); }
-    10.8%, 100% { opacity: 0; translate: none; clip-path: inset(50% 0 50% 0); }
+    2.25%  { translate: -9px 0;  clip-path: inset(20% 0 66% 0); }
+    4.5%  { translate: 6px 0;   clip-path: inset(82% 0 4% 0); }
+    6.75%  { translate: -7px 0;  clip-path: inset(40% 0 44% 0); }
+    9%  { translate: 5px 0;   clip-path: inset(8% 0 78% 0); }
+    11.25%    { translate: -2px 0;  clip-path: inset(70% 0 16% 0); }
+    13.5%, 100% { opacity: 0; translate: none; clip-path: inset(50% 0 50% 0); }
   }
   .hero__genre { animation: intro .9s cubic-bezier(.2,.7,.2,1) .45s backwards; }
   .hero__cta   { animation: intro .9s cubic-bezier(.2,.7,.2,1) .65s backwards; }
@@ -655,6 +689,7 @@ a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: va
    ruhen. Danach ist alles wieder wie vorher. */
 .hero.is-teaser .hero__logo img { visibility: hidden; animation: none; }
 .hero.is-teaser .hero__logo .glitch { display: none; }
+.hero.is-teaser .hero__ghost { display: none; }
 
 /* Lichtkegel und Glut des Startbereichs gehen mit: Bass → Glut, Höhen → Spot.
    Nur opacity/transform, damit es beim Compositor bleibt. */

@@ -731,6 +731,7 @@ a.past__row:hover .past__date, a.past__row:focus-visible .past__date { color: va
   .hero:has(.teaser) .hero__logo { width: min(86vw, 640px, 40svh); }
 }
 
-/* Der Teaser steht im Startbereich zwischen Spotify-Button und nächstem Gig */
+/* Der Teaser steht im Startbereich über dem nächsten Gig. Den Spotify-Button darüber gibt es seit 28.11.2026
+   nicht mehr: Der Start war auf dem Handy zu voll, Spotify steht in der Icon-Reihe darunter. */
 .hero__cta .teaser__btn { grid-column: 1; }
 .hero__cta .teaser__time { grid-column: 2; }
